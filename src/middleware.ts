@@ -1,11 +1,12 @@
 // Protège toutes les routes /admin : redirige vers /admin/login si non connecté
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { supabaseUrl } from '@/lib/supabase-url';
 
 export async function middleware(req: NextRequest) {
   let res = NextResponse.next({ request: req });
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseUrl(),
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
