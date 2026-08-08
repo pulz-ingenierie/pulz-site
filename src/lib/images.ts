@@ -9,7 +9,9 @@
 
 // Base publique du bucket "photos" sur Supabase Storage.
 // Exemple : https://xxxx.supabase.co/storage/v1/object/public/photos
-const BASE = `${process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''}/storage/v1/object/public/photos`;
+// (URL normalisée : tolère un NEXT_PUBLIC_SUPABASE_URL en .../rest/v1)
+import { storageBase } from './supabase-url';
+const BASE = storageBase('photos');
 
 /**
  * Construit l'URL publique d'une photo stockée dans le bucket.
@@ -29,6 +31,9 @@ export const IMG = {
   logoColor: photoUrl('logos', 'pulz-color.png'),    // logo couleur
   logoDetoure: photoUrl('logos', 'pulz-detoure.png'),// logo détouré (fond foncé)
   pulzSymbol: photoUrl('logos', 'pulz-symbol.png'),  // symbole « P » (lévitation /groupe)
+
+  // Photo d'équipe du bandeau d'accueil
+  homeEquipe: photoUrl('home', 'pulz-equipe.jpg'),
 
   // Logos des 4 sociétés (version bloc)
   societes: {
@@ -64,6 +69,20 @@ export const IMG = {
     banqueDeFrance: photoUrl('logos', 'client-banque-de-france.png'),
   } as Record<string, string>,
 };
+
+// Photos « casque » (visuel de présentation par société), dans logos/.
+// Noms de fichiers tels quels dans Supabase (espaces / casse variables).
+const CASQUE: Record<string, string> = {
+  buscot: 'Casque buscot.png',
+  arteix: 'casque arteix.png',
+  gradient: 'casque gradient.png',
+  therac: 'casque therac.png',
+};
+export function casquePhoto(slug?: string | null): string | undefined {
+  if (!slug) return undefined;
+  const f = CASQUE[slug.toLowerCase()];
+  return f ? photoUrl('logos', f) : undefined;
+}
 
 /** Photo d'un membre à partir de son slug (prénom), avec repli undefined. */
 export function membrePhoto(slug?: string | null): string | undefined {

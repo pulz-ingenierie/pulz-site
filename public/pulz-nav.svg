@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="559 153 162 265"><defs>
+<linearGradient x1="594" y1="190" x2="594" y2="265" gradientUnits="userSpaceOnUse" spreadMethod="reflect" id="f0"><stop offset="0" stop-color="#0050A8"/><stop offset="0.76" stop-color="#0087E1"/><stop offset="1" stop-color="#0087E1"/></linearGradient>
+<linearGradient x1="640" y1="202" x2="640" y2="369" gradientUnits="userSpaceOnUse" spreadMethod="reflect" id="f1"><stop offset="0" stop-color="#0050A8"/><stop offset="0.76" stop-color="#0087E1"/><stop offset="1" stop-color="#0087E1"/></linearGradient></defs>
+<path d="M560.173 265C560.115 240 560.058 215 560 190L628 227.747 560.173 265Z" fill="url(#f0)" fill-rule="evenodd"/>
+<path d="M559 190.5 629.767 153 721 203.167 651.274 242 559 190.5Z" fill="#32E9FC" fill-rule="evenodd"/>
+<path d="M721 202 721 278.847 559 369 559 293.484 721 202Z" fill="url(#f1)" fill-rule="evenodd"/>
+<path d="M640 418 640 324 559 369.021 640 418Z" fill="#32E9FC" fill-rule="evenodd"/>
+</svg>

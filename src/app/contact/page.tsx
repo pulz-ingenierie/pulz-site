@@ -23,8 +23,10 @@ export default async function ContactPage() {
           </h1>
         </div>
       </header>
-      <section className="wrap" style={{ maxWidth: 920, padding: '50px 48px 90px' }}>
-        <ContactForm sujets={sujets} />
+      <section style={{ background: 'var(--paper-2)', padding: '56px 0 90px' }}>
+        <div className="wrap" style={{ maxWidth: 920 }}>
+          <ContactForm sujets={sujets} blue />
+        </div>
       </section>
       <Footer />
     </>

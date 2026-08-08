@@ -17,7 +17,9 @@
 .g-voc h2{font-size:38px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.15;margin-bottom:22px}
 .g-voc p{font-size:16px;color:var(--grey);line-height:1.8;margin-bottom:18px}
 .g-voc .logo-stage{display:flex;align-items:center;justify-content:center;position:relative;min-height:300px}
-.g-voc .logo-stage img{width:34%;max-width:165px;object-fit:contain;filter:drop-shadow(0 26px 20px rgba(10,37,64,.30))}
+.g-voc .logo-stack{display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
+.g-voc .logo-stack img{width:170px;max-width:70%;height:auto;object-fit:contain;margin:0 auto;filter:drop-shadow(0 22px 22px rgba(10,37,64,.28))}
+.g-voc .logo-stack span{font-weight:900;font-size:50px;color:var(--deep);letter-spacing:.1em;line-height:1;text-shadow:0 12px 22px rgba(10,37,64,.22)}
 
 /* valeurs */
 .g-val{padding:88px 0;background:var(--deep);color:#fff}

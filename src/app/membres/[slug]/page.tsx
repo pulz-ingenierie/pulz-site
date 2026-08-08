@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createClient } from '@/lib/supabase-server';
-import { IMG, membrePhoto, societeLogo } from '@/lib/images';
+import { IMG, membrePhoto, societeLogo, casquePhoto } from '@/lib/images';
 import { getSocieteContent } from '@/content/societes';
 import Metiers from './Metiers';
 import Equipe, { type Membre } from './Equipe';
@@ -84,6 +84,7 @@ export default async function SocietePage({ params }: { params: { slug: string }
   }));
 
   const logo = societeLogo(params.slug) ?? IMG.logo;
+  const casque = casquePhoto(params.slug);
 
   return (
     <div className="soc-page" style={styleVars}>
@@ -133,7 +134,11 @@ export default async function SocietePage({ params }: { params: { slug: string }
                 <p key={i}>{p}</p>
               ))}
             </div>
-            <div className="casque" style={{ background: 'linear-gradient(140deg,var(--soc),var(--soc-dk))' }} />
+            {casque ? (
+              <img className="casque" src={casque} alt={`${societe.nom} — chantier`} />
+            ) : (
+              <div className="casque" style={{ background: 'linear-gradient(140deg,var(--soc),var(--soc-dk))' }} />
+            )}
           </div>
         </section>
       )}

@@ -1,11 +1,12 @@
 // Client Supabase côté serveur (pages publiques, génération, API)
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import { supabaseUrl } from './supabase-url';
 
 export function createClient() {
   const cookieStore = cookies();
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseUrl(),
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
@@ -23,7 +24,7 @@ export function createClient() {
 import { createClient as createAdminSb } from '@supabase/supabase-js';
 export function createAdminClient() {
   return createAdminSb(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    supabaseUrl(),
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false } }
   );

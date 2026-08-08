@@ -21,10 +21,10 @@ export const BRIEF = {
 
 // Repli si la table `statistiques` est vide / non migrée.
 export const STATS_FALLBACK = [
-  { valeur: 6, suffixe: '', label: 'collaborateurs' },
-  { valeur: 1.4, suffixe: '', label: "chiffre d'affaires en M€ HT" },
-  { valeur: 129, suffixe: '', label: 'projets menés' },
-  { valeur: 12, suffixe: '', label: 'expertises métier' },
+  { valeur: 6, suffixe: '', label: 'Collaborateurs' },
+  { valeur: 1.4, suffixe: '', label: "Chiffre d'affaires en M€ HT" },
+  { valeur: 129, suffixe: '', label: 'Projets menés' },
+  { valeur: 12, suffixe: '', label: 'Expertises métier' },
 ];
 
 export const LOGOBAND = {

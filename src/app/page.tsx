@@ -55,21 +55,13 @@ export default async function Home() {
         </div>
       </header>
 
-      {/* BANDEAU (symbole en filigrane, en attendant une photo d'équipe) */}
-      <div
-        className="band"
-        style={{
-          minHeight: 340,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'linear-gradient(135deg,var(--deep),#123f6b)',
-        }}
-      >
+      {/* BANDEAU photo d'équipe */}
+      <div className="band" style={{ height: 460 }}>
         <img
-          src={IMG.pulzSymbol}
-          alt=""
-          style={{ height: '52%', maxHeight: 220, opacity: 0.14, filter: 'brightness(0) invert(1)' }}
+          className="photo"
+          src={IMG.homeEquipe}
+          alt="L'équipe PULZ"
+          style={{ width: '100%', height: '100%', minHeight: 0, objectFit: 'cover', objectPosition: 'center 38%', transform: 'none' }}
         />
       </div>
 
@@ -85,9 +77,9 @@ export default async function Home() {
 
       {/* BANDE LOGO / CITATION */}
       <section className="logoband">
-        <img className="lb-ghost" src={IMG.pulzSymbol} alt="" style={{ filter: 'brightness(0) invert(1)', opacity: 0.06 }} />
+        <img className="lb-ghost" src="/pulz-watermark.svg" alt="" />
         <div className="wrap lb-inner">
-          <img className="lb-logo" src={IMG.logoDetoure} alt="PULZ" />
+          <img className="lb-logo" src="/pulz-logo-white.svg" alt="PULZ" />
           <div className="lb-txt">
             <div className="lb-accent" />
             <div className="lb-eyebrow">{LOGOBAND.eyebrow}</div>

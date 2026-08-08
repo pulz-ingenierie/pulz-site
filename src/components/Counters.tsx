@@ -68,7 +68,7 @@ function StatItem({ stat, run }: { stat: Stat; run: boolean }) {
     <div className="s">
       <div className="big">
         {formatFr(val, decimals)}
-        {stat.suffixe}
+        {stat.suffixe ? <span className="unit">{stat.suffixe.trim()}</span> : null}
       </div>
       <div className="cap">{stat.label}</div>
     </div>

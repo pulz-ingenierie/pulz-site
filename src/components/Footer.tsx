@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
-import { IMG } from '@/lib/images';
 
 export default async function Footer() {
   const sb = createClient();
@@ -13,8 +12,9 @@ export default async function Footer() {
       <div className="wrap">
         <div className="top">
           <div className="brand">
-            <Link href="/">
-              <img src={IMG.logoDetoure} alt="PULZ" />
+            <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+              <img src="/pulz-logo-white.svg" alt="PULZ" style={{ height: 42, marginBottom: 0 }} />
+              <span style={{ fontWeight: 900, fontSize: 20, color: '#fff', letterSpacing: '.03em' }}>PULZ</span>
             </Link>
             <p>Groupement de maîtres d'œuvre indépendants et solidaires. La force du groupe, l'agilité de l'individu.</p>
             {p.email && <a href={`mailto:${p.email}`} style={{ color: '#C4CDD6', fontSize: 14 }}>{p.email}</a>}

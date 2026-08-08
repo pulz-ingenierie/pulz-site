@@ -87,7 +87,10 @@ export default function GroupePage() {
             </p>
           </div>
           <div className="logo-stage">
-            <img src={IMG.pulzSymbol} alt="Symbole PULZ Ingénierie" />
+            <div className="logo-stack">
+              <img src={IMG.pulzSymbol} alt="Symbole PULZ Ingénierie" />
+              <span>PULZ</span>
+            </div>
           </div>
         </div>
       </section>
