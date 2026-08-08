@@ -1,0 +1,144 @@
+/* ============================================================
+   /membres/[slug] — pages société (repris de pulz-{societe}.html)
+   La couleur société est injectée en inline-style : --soc, --soc-dk, --soc-lt.
+   ============================================================ */
+
+/* INTRO / hero société */
+.soc-intro{padding:76px 0;background:linear-gradient(180deg,#fff,var(--paper-2))}
+.soc-intro .in{max-width:var(--maxw);margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1.35fr .65fr;gap:56px;align-items:center}
+.soc-intro .bc{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:20px}
+.soc-intro .bc a{color:var(--soc)}
+.soc-intro .eyebrow{color:var(--soc);margin-bottom:18px;display:block}
+.soc-intro h1{font-size:50px;font-weight:900;color:var(--deep);letter-spacing:-.035em;line-height:1.05;margin-bottom:22px;max-width:20ch}
+/* mot accentué en relief (couleur société) */
+.soc-intro h1 span{color:var(--soc);display:inline-block;filter:drop-shadow(0 10px 10px color-mix(in srgb, var(--soc) 26%, transparent))}
+.soc-intro .lead{font-size:18px;color:var(--grey);max-width:60ch;line-height:1.7;margin-bottom:36px}
+.soc-intro .btns{display:flex;gap:14px;flex-wrap:wrap}
+.soc-intro .btn.p{background:var(--soc)}
+.soc-intro .btn.p:hover{background:var(--soc-dk)}
+.soc-intro .intro-logo{display:flex;align-items:center;justify-content:center}
+.soc-intro .intro-logo img{width:100%;max-width:230px;aspect-ratio:1/1;object-fit:contain}
+
+/* PRÉSENTATION */
+.founder{padding:90px 0}
+.founder .in{max-width:var(--maxw);margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;align-items:center}
+.founder .eyebrow{color:var(--soc);margin-bottom:16px;display:block}
+.founder h2{font-size:33px;color:var(--deep);margin-bottom:22px;letter-spacing:-.02em;line-height:1.15}
+.founder p{font-size:16px;line-height:1.8;color:var(--grey);margin-bottom:16px}
+.founder .casque{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;box-shadow:0 20px 50px color-mix(in srgb, var(--soc) 18%, transparent);display:block}
+
+/* APPROCHE (fond société foncé — cartes NON cliquables, sans hover) */
+.approche{padding:90px 0;background:var(--soc-dk);color:#fff}
+.approche .in{max-width:var(--maxw);margin:0 auto;padding:0 48px}
+.approche .head{max-width:60ch;margin-bottom:50px}
+.approche .eyebrow{color:color-mix(in srgb, var(--soc) 45%, white);margin-bottom:16px;display:block}
+.approche h2{font-size:36px;color:#fff;letter-spacing:-.03em;margin-bottom:20px}
+.approche .head p{font-size:17px;color:#C9E6E0;line-height:1.75}
+.approche-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.app-card{background:rgba(255,255,255,.10);border:none;border-radius:12px;padding:30px 28px}
+.app-card h3{font-size:18px;color:#fff;margin-bottom:12px;font-weight:800}
+.app-card p{font-size:14.5px;color:#EAF6F3;line-height:1.65}
+.app-card.white{background:#fff;box-shadow:0 20px 45px rgba(0,0,0,.22)}
+.app-card.white h3{color:var(--deep)}
+.app-card.white p{color:#5B6673}
+
+/* MÉTIERS (vignettes cliquables → volet) */
+.metiers{padding:90px 0;background:var(--paper-2)}
+.metiers .in{max-width:var(--maxw);margin:0 auto;padding:0 48px}
+.metiers .head{margin-bottom:50px;max-width:64ch}
+.metiers .eyebrow{color:var(--soc);margin-bottom:16px;display:block}
+.metiers h2{font-size:36px;color:var(--deep);letter-spacing:-.03em;margin-bottom:18px}
+.metiers .head p{font-size:16.5px;color:var(--grey);line-height:1.75}
+.metiers .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;padding:0;background:transparent;border:none;border-radius:0;overflow:visible}
+.metiers .svc{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:box-shadow .3s,transform .3s;padding:30px 26px;cursor:pointer}
+.metiers .svc:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 26px 55px color-mix(in srgb, var(--soc) 22%, transparent)}
+.metiers .svc .svc-ic{width:32px;height:32px;color:var(--soc);margin-bottom:16px;transition:transform .3s}
+.metiers .svc:hover .svc-ic{transform:scale(1.12) rotate(-4deg)}
+.metiers .svc .svc-ic svg{width:100%;height:100%}
+.metiers .svc h3{font-size:17.5px;color:var(--deep);margin-bottom:9px;font-weight:800}
+.metiers .svc p{font-size:13.5px;color:var(--grey);line-height:1.6;margin-bottom:14px}
+.svc-more{font-size:13px;color:var(--soc);font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.metiers .svc:hover .svc-more .arr{transform:translateX(3px)}
+.svc-more .arr{transition:transform .3s;display:inline-block}
+
+/* ÉQUIPE */
+.team{padding:90px 0}
+.team .in{max-width:var(--maxw);margin:0 auto;padding:0 48px}
+.team .head{margin-bottom:44px}
+.team .eyebrow{color:var(--soc);margin-bottom:16px;display:block}
+.team h2{font-size:36px;color:var(--deep);letter-spacing:-.03em}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.member{border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;background:#fff;transition:.22s;text-align:left}
+.member.clickable{cursor:pointer;font-family:inherit;padding:0}
+.member.clickable:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 26px 55px color-mix(in srgb, var(--soc) 26%, transparent)}
+.member .pic{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(100%);display:block}
+.member .pic-init{width:100%;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:52px;font-weight:900;color:#fff;background:var(--soc)}
+.member .bd{padding:20px 22px}
+.member .nm{font-weight:800;color:var(--deep);font-size:19px;line-height:1.15}
+.member .role{color:var(--soc);font-size:13.5px;font-weight:700;margin-top:5px}
+.member .grp{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--grey-lt);margin-top:10px}
+.member .desc{font-size:13.5px;color:var(--grey);margin-top:12px;line-height:1.6}
+.member .seemore{font-size:12px;color:var(--soc);font-weight:700;margin-top:10px;display:inline-flex;align-items:center;gap:5px}
+
+/* RÉFÉRENCES société (fond société foncé) */
+.srefs{padding:90px 0;background:var(--soc-dk);color:#fff}
+.srefs .in{max-width:var(--maxw);margin:0 auto;padding:0 48px}
+.srefs .head{margin-bottom:44px;max-width:64ch}
+.srefs .eyebrow{color:color-mix(in srgb, var(--soc) 45%, white);margin-bottom:16px;display:block}
+.srefs h2{font-size:36px;color:#fff;letter-spacing:-.03em;margin-bottom:18px}
+.srefs .head p{font-size:16.5px;color:#C9E6E0;line-height:1.75}
+.sref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.sref{background:#fff;border-radius:10px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.sref:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 26px 55px rgba(30,99,196,.22)}
+.sref .ph{height:150px;background:linear-gradient(140deg,var(--soc),var(--soc-dk));display:flex;align-items:flex-end;padding:14px}
+.sref .ph .cat{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.3);padding:5px 11px;border-radius:4px}
+.sref .bd{padding:22px 24px}
+.sref h3{font-size:16px;color:var(--deep);margin-bottom:8px;font-weight:800;line-height:1.25}
+.sref p{font-size:13px;color:var(--grey);line-height:1.5}
+.srefs .more{margin-top:40px}
+.srefs .btn.g{background:#fff;color:var(--soc-dk)}
+
+/* CTA société */
+.soc-cta{padding:84px 0;background:#fff;text-align:center}
+.soc-cta h2{font-size:32px;color:var(--deep);margin-bottom:16px}
+.soc-cta p{color:var(--grey);font-size:16px;max-width:52ch;margin:0 auto 28px}
+.soc-cta .btn.p{background:var(--soc)}
+.soc-cta .btn.p:hover{background:var(--soc-dk)}
+
+/* Le volet latéral métier utilise le composant générique .mv de globals.css ;
+   l'accent est piloté par --panel-accent / --panel-soft (définis sur .soc-page). */
+
+/* ---- VOLET LATÉRAL CV ---- */
+.cv-ov{position:fixed;inset:0;background:rgba(10,37,64,.5);opacity:0;visibility:hidden;transition:.35s;z-index:300}
+.cv-ov.on{opacity:1;visibility:visible}
+.cv{position:fixed;top:0;right:-620px;width:560px;max-width:94vw;height:100%;background:#fff;box-shadow:-20px 0 60px rgba(0,0,0,.25);transition:right .45s cubic-bezier(.16,1,.3,1);z-index:301;display:flex;flex-direction:column;overflow-y:auto}
+.cv.on{right:0}
+.cv-x{position:absolute;top:20px;right:22px;width:38px;height:38px;border-radius:9px;border:1px solid var(--line);background:#fff;font-size:22px;color:var(--grey);cursor:pointer;z-index:5;line-height:1}
+.cv-x:hover{border-color:var(--soc);color:var(--soc)}
+.cv-top{padding:38px 40px 26px;border-bottom:1px solid var(--line);display:flex;gap:22px;align-items:flex-start}
+.cv-photo{width:110px;height:110px;border-radius:12px;object-fit:cover;object-position:center 22%;flex-shrink:0;background:var(--soc)}
+.cv-photo-init{width:110px;height:110px;border-radius:12px;flex-shrink:0;background:var(--soc);color:#fff;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900}
+.cv-id{padding-top:4px}
+.cv-id .r{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--soc);font-weight:700;margin-bottom:6px}
+.cv-id h3{font-size:26px;font-weight:900;color:var(--deep);letter-spacing:-.02em;line-height:1.1}
+.cv-id .acc{font-size:13.5px;color:var(--grey);line-height:1.5;margin-top:10px;font-style:italic}
+.cv-body{padding:28px 40px 46px}
+.cv-sec{margin-bottom:28px}
+.cv-sec .h{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soc);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.cv-sec .h::before{content:"";width:22px;height:2px;background:var(--soc)}
+.cv-sec p{font-size:14.5px;color:var(--grey);line-height:1.75}
+.cv-xp{display:flex;flex-direction:column;gap:16px}
+.cv-xp-item{padding-left:16px;border-left:2px solid var(--soc-lt)}
+.cv-xp-item .d{font-size:11.5px;color:var(--grey-lt);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.cv-xp-item .t{font-size:14.5px;color:var(--deep);font-weight:800;margin-bottom:3px}
+.cv-xp-item .t.accent{color:var(--accent)}
+.cv-xp-item .dd{font-size:13.5px;color:var(--grey);line-height:1.6}
+.cv-skills{display:flex;flex-wrap:wrap;gap:8px}
+.cv-skill{font-size:12.5px;font-weight:600;color:var(--deep);background:var(--paper-2);border:1px solid var(--line);padding:7px 13px;border-radius:20px}
+
+@media(max-width:1024px){.approche-grid,.sref-grid{grid-template-columns:1fr 1fr}.metiers .svc-grid{grid-template-columns:1fr 1fr}.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){
+  .soc-intro .in,.founder .in{grid-template-columns:1fr;gap:36px}
+  .soc-intro h1{font-size:34px}
+  .approche-grid,.sref-grid,.metiers .svc-grid{grid-template-columns:1fr}
+}

@@ -1,0 +1,16 @@
+node_modules
+.next
+.env.local
+.env*.local
+.DS_Store
+*.log
+
+# Doublon local du projet (à ne pas versionner)
+/pulz-app/
+
+# Références de design locales (fournies via archives, lourdes)
+/maquettes/
+/maquettes-pulz/
+
+# Réglages machine-locaux de l'outil
+.claude/settings.local.json

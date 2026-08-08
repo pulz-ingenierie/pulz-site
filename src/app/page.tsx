@@ -1,50 +1,220 @@
-// PAGE D'ACCUEIL — version dynamique de base (à enrichir avec le design des maquettes)
+// PAGE D'ACCUEIL — design maquette (pulz-home.html).
+//  Compteurs + références = base de données ; le reste est fixe (src/content/home.ts).
+//  Seule animation au scroll : les compteurs.
+import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import Link from 'next/link';
+import Counters, { type Stat } from '@/components/Counters';
+import HomeServices from '@/components/HomeServices';
+import ContactForm from './contact/ContactForm';
 import { createClient } from '@/lib/supabase-server';
+import { IMG } from '@/lib/images';
+import { services } from '@/content/home.services';
+import { HERO, BRIEF, STATS_FALLBACK, LOGOBAND, SOCS, SERVICES_CARDS, REFS_FALLBACK, CLIENTS } from '@/content/home';
 
 export const revalidate = 60;
 
 export default async function Home() {
   const sb = createClient();
-  const { data: societes } = await sb.from('societes').select('*').order('ordre');
-  const { data: refsCount } = await sb.from('references_projets').select('id', { count: 'exact', head: true }).eq('statut', 'publie');
+  const [statsRes, refsRes, routesRes, paramsRes] = await Promise.all([
+    sb.from('statistiques').select('valeur, suffixe, label').order('ordre'),
+    sb
+      .from('references_projets')
+      .select('slug, titre, categorie, localisation, description, a_la_une')
+      .eq('statut', 'publie')
+      .order('a_la_une', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(6),
+    sb.from('routage_contact').select('sujet').order('ordre'),
+    sb.from('parametres').select('cle, valeur'),
+  ]);
+
+  const stats: Stat[] = statsRes.data && statsRes.data.length ? (statsRes.data as Stat[]) : STATS_FALLBACK;
+  const refs = refsRes.data ?? [];
+  const sujets = (routesRes.data ?? []).map((r: any) => r.sujet);
+  const p = Object.fromEntries((paramsRes.data ?? []).map((r: any) => [r.cle, r.valeur]));
 
   return (
     <>
       <Nav />
-      <header style={{ background: 'linear-gradient(180deg,#fff,var(--paper-2))', padding: '92px 0 74px' }}>
+
+      {/* HERO */}
+      <header className="hero">
         <div className="wrap">
-          <span className="eyebrow">Groupement de maîtres d'œuvre · Hauts-de-France</span>
-          <div className="fluo" style={{ marginTop: 16 }} />
-          <h1 style={{ fontSize: 56, fontWeight: 900, letterSpacing: '-.035em', lineHeight: 1.05, color: 'var(--deep)', maxWidth: '16ch' }}>
-            Le groupe de maîtres d'œuvre de <span style={{ color: 'var(--blue)', display: 'inline-block', filter: 'drop-shadow(0 10px 10px rgba(30,99,196,.28))' }}>toutes vos réussites.</span>
+          <span className="eyebrow">{HERO.eyebrow}</span>
+          <h1>
+            {HERO.titre}
+            <span>{HERO.titreAccent}</span>
           </h1>
-          <p style={{ fontSize: 20, color: 'var(--grey)', maxWidth: '60ch', lineHeight: 1.65, marginTop: 22 }}>
-            Quatre bureaux d'études indépendants et solidaires, réunis pour porter vos projets de construction et de rénovation — de la conception au suivi de l'exécution.
-          </p>
-          <div style={{ marginTop: 30, display: 'flex', gap: 14 }}>
-            <Link href="/references" style={{ background: 'var(--blue)', color: '#fff', fontWeight: 700, padding: '15px 30px', borderRadius: 6 }}>Nos réalisations</Link>
-            <Link href="/contact" style={{ border: '1px solid var(--line)', color: 'var(--deep)', fontWeight: 700, padding: '15px 30px', borderRadius: 6 }}>Nous contacter</Link>
+          <p className="sub">{HERO.sub}</p>
+          <p className="sig">{HERO.sig}</p>
+          <div className="btns">
+            <Link className="btn p" href="/references">Voir nos références</Link>
+            <Link className="btn g" href="/groupe">Découvrir le groupe</Link>
           </div>
         </div>
       </header>
 
-      <section className="wrap" style={{ padding: '70px 48px' }}>
-        <span className="eyebrow">Le groupement</span>
-        <div className="fluo" style={{ marginTop: 14 }} />
-        <h2 style={{ fontSize: 38, fontWeight: 900, color: 'var(--deep)', marginBottom: 30 }}>Quatre expertises complémentaires</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 20 }}>
-          {(societes ?? []).map((s: any) => (
-            <Link key={s.slug} href={`/membres/${s.slug}`} style={{ border: '1px solid var(--line)', borderRadius: 12, padding: '26px 28px', display: 'block' }}>
-              <div style={{ width: 10, height: 10, borderRadius: '50%', background: s.couleur, marginBottom: 14 }} />
-              <h3 style={{ fontSize: 19, fontWeight: 800, color: 'var(--deep)' }}>{s.nom}</h3>
-              <p style={{ fontSize: 14, color: 'var(--grey)', marginTop: 6 }}>{s.domaine}</p>
-            </Link>
-          ))}
+      {/* BANDEAU (symbole en filigrane, en attendant une photo d'équipe) */}
+      <div
+        className="band"
+        style={{
+          minHeight: 340,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'linear-gradient(135deg,var(--deep),#123f6b)',
+        }}
+      >
+        <img
+          src={IMG.pulzSymbol}
+          alt=""
+          style={{ height: '52%', maxHeight: 220, opacity: 0.14, filter: 'brightness(0) invert(1)' }}
+        />
+      </div>
+
+      {/* LE GROUPE EN BREF + COMPTEURS */}
+      <section className="brief">
+        <div className="wrap brief-c">
+          <span className="eyebrow">{BRIEF.eyebrow}</span>
+          <h2>{BRIEF.titre}</h2>
+          <p>{BRIEF.texte}</p>
+          <Counters stats={stats} />
         </div>
       </section>
+
+      {/* BANDE LOGO / CITATION */}
+      <section className="logoband">
+        <img className="lb-ghost" src={IMG.pulzSymbol} alt="" style={{ filter: 'brightness(0) invert(1)', opacity: 0.06 }} />
+        <div className="wrap lb-inner">
+          <img className="lb-logo" src={IMG.logoDetoure} alt="PULZ" />
+          <div className="lb-txt">
+            <div className="lb-accent" />
+            <div className="lb-eyebrow">{LOGOBAND.eyebrow}</div>
+            <p className="lb-quote">{LOGOBAND.quote}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* MEMBRES DU GROUPE */}
+      <section className="sec socs" id="socs">
+        <div className="wrap">
+          <div className="head">
+            <span className="eyebrow">Les membres du groupe</span>
+            <h2>Quatre bureaux d'études, une même exigence</h2>
+            <p className="lead">
+              Choisir PULZ, c'est opter pour une approche humaine et innovante de la maîtrise d'œuvre. Chaque
+              membre reste maître de son métier ; ensemble, nous couvrons l'intégralité d'une mission.
+            </p>
+          </div>
+          <div className="scards">
+            {SOCS.map((s) => (
+              <Link key={s.slug} className={`scard ${s.slug}`} href={`/membres/${s.slug}`}>
+                <div className="logobox">
+                  <img src={IMG.membres[s.slug]} alt={s.nom} />
+                </div>
+                <div className="bd">
+                  <h3>{s.nom}</h3>
+                  <div className="role">{s.role}</div>
+                  <p>{s.texte}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MÉTIERS & SERVICES */}
+      <section className="sec services" id="services">
+        <div className="wrap">
+          <div className="head">
+            <span className="eyebrow">Nos métiers & services</span>
+            <h2>De la conception au suivi de chantier</h2>
+            <p className="lead">
+              Quel que soit votre projet, PULZ vous accompagne avec un service personnalisé, en conception
+              comme en réalisation.
+            </p>
+          </div>
+          <HomeServices cards={SERVICES_CARDS} services={services} />
+        </div>
+      </section>
+
+      {/* RÉFÉRENCES */}
+      <section className="sec refs" id="refs">
+        <div className="wrap">
+          <div className="head">
+            <span className="eyebrow">Nos références</span>
+            <h2>La preuve par les projets</h2>
+            <p className="lead">
+              Logement, tertiaire, industrie, équipements publics : nos compétences au service de votre
+              réussite, partout en région.
+            </p>
+          </div>
+          <div className="rgrid">
+            {refs.length > 0
+              ? refs.map((r: any) => (
+                  <Link key={r.slug} className="rcard" href={`/references/${r.slug}`}>
+                    <div className="ph">
+                      <span className="tag">{r.categorie}{r.localisation ? ` · ${r.localisation}` : ''}</span>
+                    </div>
+                    <div className="bd">
+                      <h3>{r.titre}</h3>
+                      <p>{r.description}</p>
+                    </div>
+                  </Link>
+                ))
+              : REFS_FALLBACK.map((r, i) => (
+                  <div key={i} className="rcard" style={{ cursor: 'default' }}>
+                    <div className="ph">
+                      <span className="tag">{r.tag}</span>
+                    </div>
+                    <div className="bd">
+                      <h3>{r.titre}</h3>
+                      <p>{r.texte}</p>
+                    </div>
+                  </div>
+                ))}
+          </div>
+          <div className="more">
+            <Link className="btn acc" href="/references">Découvrir toutes nos références</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CLIENTS */}
+      <section className="clients">
+        <div className="wrap">
+          <div className="lbl">Ils nous font confiance</div>
+          <div className="row">
+            {CLIENTS.map((c) => (
+              <span key={c} className="c">{c}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section className="contact" id="contact">
+        <div className="wrap">
+          <div style={{ display: 'grid', gridTemplateColumns: '.85fr 1.15fr', gap: 24, alignItems: 'stretch' }}>
+            <div className="left" style={{ background: 'var(--deep)', color: '#fff', padding: '48px 44px', borderRadius: 16 }}>
+              <span className="eyebrow" style={{ color: 'var(--accent)', display: 'block', marginBottom: 18 }}>Contact</span>
+              <h2 style={{ color: '#fff', fontSize: 32, marginBottom: 16, maxWidth: '14ch' }}>Transformez vos idées en réalité</h2>
+              <p style={{ color: '#B8CEE4', marginBottom: 30, fontSize: 16, lineHeight: 1.65 }}>
+                Contactez-nous pour discuter de votre projet et découvrir comment nous pouvons vous accompagner.
+              </p>
+              <div style={{ fontSize: 15, lineHeight: 2.1, color: '#D6E2EE' }}>
+                <b style={{ color: '#fff' }}>PULZ</b> — Groupement de maîtres d'œuvre<br />
+                {p.adresse ?? "99 rue de l'Union, 59118 Wambrechies"}<br />
+                {p.telephone && (<><b style={{ color: '#fff' }}>{p.telephone}</b><br /></>)}
+                {p.email ?? 'contact@pulz-ingenierie.fr'}
+              </div>
+            </div>
+            <ContactForm sujets={sujets} />
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </>
   );

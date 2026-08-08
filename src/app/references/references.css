@@ -1,0 +1,32 @@
+/* ============================================================
+   /references — liste (repris de pulz-references.html)
+   ============================================================ */
+.refhero{padding:80px 0 40px;background:linear-gradient(180deg,#fff,var(--paper-2))}
+.refhero .in{max-width:var(--maxw);margin:0 auto;padding:0 48px}
+.refhero .bc{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:20px}
+.refhero .bc a{color:var(--blue)}
+.refhero .eyebrow{color:var(--blue);margin-bottom:18px;display:block}
+.refhero h1{font-size:46px;font-weight:900;color:var(--deep);letter-spacing:-.035em;line-height:1.05;margin-bottom:20px;max-width:20ch}
+.refhero p{font-size:17px;color:var(--grey);max-width:65ch;line-height:1.7}
+
+.filters{max-width:var(--maxw);margin:0 auto;padding:24px 48px 0;display:flex;flex-wrap:wrap;gap:10px}
+.filter{font-family:inherit;font-size:13.5px;font-weight:700;color:var(--grey);background:#fff;border:1px solid var(--line);border-radius:40px;padding:9px 20px;cursor:pointer;transition:.2s}
+.filter:hover{border-color:var(--blue);color:var(--blue)}
+.filter.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+
+.refcount{max-width:var(--maxw);margin:0 auto;padding:20px 48px 0;font-size:14px;color:var(--grey-lt);font-weight:600}
+.refwrap{max-width:var(--maxw);margin:0 auto;padding:16px 48px 90px}
+.refgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rcard-l{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;cursor:pointer}
+.rcard-l:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 28px 55px rgba(30,99,196,.22)}
+.rcard-l .ph{height:170px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding:14px;background:linear-gradient(150deg,#123f6b,#0A2540)}
+.rcard-l .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.rcard-l .cat{position:relative;z-index:1;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--blue);padding:5px 11px;border-radius:4px}
+.rcard-l .bd{padding:20px 22px;flex:1;display:flex;flex-direction:column}
+.rcard-l h3{font-size:16px;color:var(--deep);font-weight:800;line-height:1.25;margin-bottom:4px}
+.rcard-l .loc{font-size:12.5px;color:var(--blue);font-weight:700;margin-bottom:10px}
+.rcard-l p{font-size:13px;color:var(--grey);line-height:1.55}
+.noresult{grid-column:1/-1;text-align:center;padding:60px;color:var(--grey-lt);font-size:15px}
+
+@media(max-width:1024px){.refgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.refgrid{grid-template-columns:1fr}.refhero h1{font-size:32px}}

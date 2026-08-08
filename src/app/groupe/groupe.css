@@ -1,0 +1,50 @@
+/* ============================================================
+   /groupe — Le Groupe (styles spécifiques, repris de pulz-groupe.html)
+   ============================================================ */
+.g-hero{background:linear-gradient(180deg,#fff 0%,var(--paper-2) 100%);padding:84px 0 70px}
+.g-hero .eyebrow{margin-bottom:16px;display:block}
+.g-hero .fluo{margin-bottom:22px}
+.g-hero h1{font-size:58px;font-weight:900;color:var(--deep);letter-spacing:-.035em;line-height:1.05;margin-bottom:24px;max-width:17ch}
+.g-hero .lead{font-size:20px;color:var(--grey);max-width:60ch;line-height:1.65}
+.g-hero .sig{font-size:17px;color:var(--blue);font-weight:600;font-style:italic;margin-top:26px}
+/* mot accentué du hero en relief (sort de l'écran) */
+.g-hero h1 span{color:var(--blue);display:inline-block;filter:drop-shadow(0 10px 10px rgba(30,99,196,.28))}
+
+/* vocation */
+.g-voc{padding:80px 0;background:#fff}
+.g-voc .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.g-voc .eyebrow{margin-bottom:16px;display:block}
+.g-voc h2{font-size:38px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.15;margin-bottom:22px}
+.g-voc p{font-size:16px;color:var(--grey);line-height:1.8;margin-bottom:18px}
+.g-voc .logo-stage{display:flex;align-items:center;justify-content:center;position:relative;min-height:300px}
+.g-voc .logo-stage img{width:34%;max-width:165px;object-fit:contain;filter:drop-shadow(0 26px 20px rgba(10,37,64,.30))}
+
+/* valeurs */
+.g-val{padding:88px 0;background:var(--deep);color:#fff}
+.g-val .head{max-width:60ch;margin-bottom:50px}
+.g-val .eyebrow{color:var(--accent);margin-bottom:16px;display:block}
+.g-val h2{font-size:42px;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;color:#fff}
+.g-val .head p{font-size:17px;color:#B8CEE4;line-height:1.7}
+.g-val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.g-val-card{background:#fff;border:1px solid rgba(255,255,255,.22);border-radius:14px;padding:34px 30px;box-shadow:0 12px 40px rgba(0,0,0,.16)}
+.g-val-card .ic{width:52px;height:52px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.g-val-card .ic svg{width:26px;height:26px;color:#fff}
+.g-val-card h3{font-size:22px;font-weight:800;margin-bottom:12px;color:var(--deep)}
+.g-val-card p{font-size:15px;color:var(--grey);line-height:1.75}
+
+/* membres */
+.g-mem{padding:88px 0;background:#fff}
+.g-mem .head{max-width:60ch;margin-bottom:44px}
+.g-mem .eyebrow{margin-bottom:16px;display:block}
+.g-mem h2{font-size:42px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+.g-mem .head p{font-size:17px;color:var(--grey);line-height:1.7}
+
+/* CTA */
+.g-cta{padding:84px 0;background:var(--paper-2);text-align:center}
+.g-cta h2{font-size:34px;color:var(--deep);margin-bottom:16px;font-weight:900;letter-spacing:-.02em}
+.g-cta p{color:var(--grey);font-size:17px;max-width:54ch;margin:0 auto 28px;line-height:1.6}
+.g-cta a{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:15px;padding:16px 34px;border-radius:4px;transition:.2s}
+.g-cta a:hover{background:var(--deep)}
+
+@media(max-width:1024px){.g-voc .wrap{grid-template-columns:1fr;gap:36px}.g-val-grid{grid-template-columns:1fr}}
+@media(max-width:680px){.g-hero h1{font-size:38px}.g-val h2,.g-mem h2{font-size:30px}}

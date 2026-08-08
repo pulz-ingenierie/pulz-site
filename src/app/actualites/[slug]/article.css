@@ -1,0 +1,47 @@
+/* ============================================================
+   /actualites/[slug] — gabarit article « B1 » (actualite-*.html)
+   ============================================================ */
+.ad-hero{background:#fff;padding:52px 0 20px}
+.ad-hero .in{max-width:1000px;margin:0 auto;padding:0 48px}
+.ad-hero .bc{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:20px}
+.ad-hero .bc a{color:var(--blue)}
+.ad-tags{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.ad-cat{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);background:#EAF1FB;padding:7px 15px;border-radius:20px}
+.ad-cat::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue)}
+.ad-readtime{font-size:12.5px;color:var(--grey-lt);font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.ad-hero h1{font-size:42px;font-weight:900;letter-spacing:-.03em;line-height:1.12;margin:0 0 14px;max-width:22ch;color:var(--deep)}
+.ad-hero h1 .hl{color:var(--blue);display:inline-block;filter:drop-shadow(0 8px 8px rgba(30,99,196,.25))}
+.ad-hero .date{font-size:13.5px;color:var(--grey);font-weight:600}
+
+.ad-cover{max-width:1000px;margin:14px auto 0;padding:0 48px}
+.ad-cover .img{width:100%;height:460px;object-fit:cover;border-radius:18px;box-shadow:0 26px 55px rgba(10,37,64,.14);background:linear-gradient(135deg,var(--blue),var(--deep))}
+
+.ad-grid{max-width:1000px;margin:0 auto;padding:44px 48px 60px;position:relative}
+.ad-rail{position:absolute;left:-16px;top:44px;display:flex;flex-direction:column;gap:11px;align-items:center}
+.ad-rail .rl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-lt);font-weight:700;writing-mode:vertical-rl;transform:rotate(180deg);margin-bottom:4px}
+.ad-rail .sh{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:var(--grey);font-weight:700;transition:.15s;cursor:pointer;text-decoration:none}
+.ad-rail .sh:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.ad-rail .sh svg{width:18px;height:18px}
+.ad-chapo{font-size:21px;color:var(--deep);font-weight:500;line-height:1.55;padding-left:20px;border-left:4px solid var(--accent);margin-bottom:30px}
+.ad-article p{font-size:17px;color:var(--ink);line-height:1.85;margin:0 0 22px}
+
+.ad-back{max-width:1000px;margin:0 auto;padding:0 48px 10px}
+.ad-back a{color:var(--blue);font-weight:700;font-size:14px}
+.ad-back a:hover{text-decoration:underline}
+
+.ad-more{background:var(--paper-2);padding:60px 0 70px}
+.ad-more .in{max-width:1000px;margin:0 auto;padding:0 48px}
+.ad-more .eyebrow{color:var(--blue);display:block;margin-bottom:16px}
+.ad-more h2{font-size:26px;font-weight:900;color:var(--deep);letter-spacing:-.03em;margin-bottom:24px}
+.ad-more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.amini{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s;display:block}
+.amini:hover{transform:translateY(-6px);box-shadow:0 22px 46px rgba(30,99,196,.16)}
+.amini .ph{height:150px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--blue),var(--deep))}
+.amini .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.amini .ph .cat{position:absolute;bottom:10px;left:10px;font-size:10px;font-weight:700;text-transform:uppercase;color:#fff;background:var(--blue);padding:4px 9px;border-radius:4px}
+.amini .bd{padding:16px 18px}
+.amini .meta{font-size:12px;color:var(--grey-lt);font-weight:600;margin-bottom:6px}
+.amini h3{font-size:15px;color:var(--deep);font-weight:800;line-height:1.35}
+
+@media(max-width:1024px){.ad-more-grid{grid-template-columns:1fr}.ad-cover .img{height:320px}}
+@media(max-width:680px){.ad-hero h1{font-size:30px}.ad-rail{position:static;flex-direction:row;margin-bottom:20px}.ad-rail .rl{writing-mode:horizontal-tb;transform:none;margin:0 6px 0 0}}
