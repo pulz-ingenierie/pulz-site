@@ -26,6 +26,7 @@ export default async function EditReference({ params }: { params: { id: string }
       statut: data.statut,
       seo_titre: data.seo_titre,
       seo_description: data.seo_description,
+      client_logo_url: data.client_logo_url,
     };
   }
 

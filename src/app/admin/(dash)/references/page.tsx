@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
 import { dateFr } from '@/lib/slug';
+import ImportPanel from './ImportPanel';
+import DeleteRefButton from './DeleteRefButton';
+import DeleteAllRefsButton from './DeleteAllRefsButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,9 +24,11 @@ export default async function AdminReferences() {
           <div className="sub">{list.length} projet{list.length > 1 ? 's' : ''}</div>
         </div>
         <div className="actions">
+          <DeleteAllRefsButton count={list.length} />
           <Link className="abtn primary" href="/admin/references/new">+ Nouvelle référence</Link>
         </div>
       </div>
+      <ImportPanel />
       <div className="adm-body">
         {list.length === 0 ? (
           <div className="acard"><p className="hint" style={{ margin: 0 }}>Aucune référence pour le moment. Créez-en une, ou lancez la migration SQL des 30 références.</p></div>
@@ -40,7 +45,12 @@ export default async function AdminReferences() {
                   <td>{r.localisation || '—'}</td>
                   <td><span className={`badge ${r.statut}`}>{r.statut}</span></td>
                   <td>{r.updated_at ? dateFr(r.updated_at) : '—'}</td>
-                  <td><Link className="rowlink" href={`/admin/references/${r.id}`}>Éditer</Link></td>
+                  <td>
+                    <div style={{ display: 'flex', gap: 14, justifyContent: 'flex-end' }}>
+                      <Link className="rowlink" href={`/admin/references/${r.id}`}>Éditer</Link>
+                      <DeleteRefButton id={r.id} titre={r.titre} />
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>

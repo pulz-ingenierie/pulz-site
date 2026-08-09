@@ -123,9 +123,14 @@ export default async function ReferenceDetail({ params }: { params: { slug: stri
             <h2>Le projet en détail</h2>
             {ref.description && <p className="sub">{ref.description}</p>}
             {specificites.length > 0 && (
-              <p className="spectext">
-                <strong>Spécificités du projet :</strong> {specificites.join(', ')}.
-              </p>
+              <div className="spectext">
+                <strong>Spécificités du projet :</strong>
+                <ul style={{ margin: '10px 0 0', paddingLeft: 20, lineHeight: 1.9 }}>
+                  {specificites.map((s, i) => (
+                    <li key={i}>{s}</li>
+                  ))}
+                </ul>
+              </div>
             )}
             <div className="rphotos-grid">
               {cells.map((src, i) =>

@@ -59,7 +59,8 @@ export default function ActuForm({ initial }: { initial: ActuRecord | null }) {
         const { error } = await sb.from('actualites').update(payload).eq('id', initial!.id);
         if (error) throw error;
         setF((p) => ({ ...p, statut: payload.statut }));
-        setNotice({ t: 'ok', m: 'Actualité enregistrée.' });
+        setNotice({ t: 'ok', m: payload.statut === 'publie' ? 'Actualité enregistrée et publiée.' : 'Actualité enregistrée (brouillon).' });
+        router.refresh();
       } else {
         const { data, error } = await sb.from('actualites').insert(payload).select('id').single();
         if (error) throw error;
@@ -75,6 +76,17 @@ export default function ActuForm({ initial }: { initial: ActuRecord | null }) {
 
   function onCover(up: UploadedPhoto[]) {
     if (up[0]) set('image_url', up[0].url);
+  }
+
+  async function removeActu() {
+    if (!editing) return;
+    if (!confirm(`Supprimer l'actualité « ${f.titre} » ?\n\nCette action est définitive.`)) return;
+    setSaving(true);
+    const sb = createClient();
+    const { error } = await sb.from('actualites').delete().eq('id', initial!.id);
+    if (error) { setNotice({ t: 'err', m: error.message }); setSaving(false); return; }
+    router.push('/admin/actualites');
+    router.refresh();
   }
 
   const seoTLen = (f.seo_titre || '').length;
@@ -161,6 +173,17 @@ export default function ActuForm({ initial }: { initial: ActuRecord | null }) {
         <button type="button" className="abtn primary" onClick={() => save(true)} disabled={saving || !f.titre}>
           {f.statut === 'publie' ? 'Enregistrer (publié)' : 'Publier'}
         </button>
+        {editing && (
+          <button
+            type="button"
+            className="abtn"
+            onClick={removeActu}
+            disabled={saving}
+            style={{ marginLeft: 'auto', color: '#C0392B', borderColor: '#E7B7B0' }}
+          >
+            Supprimer l'actualité
+          </button>
+        )}
       </div>
     </>
   );

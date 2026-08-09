@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
 import { dateFr } from '@/lib/slug';
+import DeleteActuButton from './DeleteActuButton';
+import DeleteAllActusButton from './DeleteAllActusButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +23,7 @@ export default async function AdminActualites() {
           <div className="sub">{list.length} article{list.length > 1 ? 's' : ''}</div>
         </div>
         <div className="actions">
+          <DeleteAllActusButton count={list.length} />
           <Link className="abtn primary" href="/admin/actualites/new">+ Nouvelle actualité</Link>
         </div>
       </div>
@@ -39,7 +42,12 @@ export default async function AdminActualites() {
                   <td>{a.categorie}</td>
                   <td>{a.date_publication ? dateFr(a.date_publication) : '—'}</td>
                   <td><span className={`badge ${a.statut}`}>{a.statut}</span></td>
-                  <td><Link className="rowlink" href={`/admin/actualites/${a.id}`}>Éditer</Link></td>
+                  <td>
+                    <div style={{ display: 'flex', gap: 14, justifyContent: 'flex-end' }}>
+                      <Link className="rowlink" href={`/admin/actualites/${a.id}`}>Éditer</Link>
+                      <DeleteActuButton id={a.id} titre={a.titre} />
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
