@@ -9,6 +9,7 @@ import HomeServices from '@/components/HomeServices';
 import ContactForm from './contact/ContactForm';
 import { createPublicClient } from '@/lib/supabase-public';
 import { coverPhotoMap } from '@/lib/reference-photos';
+import { slugify } from '@/lib/slug';
 import { IMG } from '@/lib/images';
 import { services } from '@/content/home.services';
 import { HERO, BRIEF, STATS_FALLBACK, LOGOBAND, SOCS, SERVICES_CARDS, REFS_FALLBACK, CLIENTS } from '@/content/home';
@@ -37,10 +38,19 @@ export default async function Home() {
   const sujets = (routesRes.data ?? []).map((r: any) => r.sujet);
   const p = Object.fromEntries((paramsRes.data ?? []).map((r: any) => [r.cle, r.valeur]));
 
-  // Logos clients (dédupliqués par URL) pour la bande « Ils nous font confiance ».
+  // Logos clients pour « Ils nous font confiance », dédupliqués par NOM du client
+  // (le même client sur 2 références a 2 fichiers logo distincts -> URLs différentes) ;
+  // repli sur l'URL quand la maîtrise d'ouvrage n'est pas renseignée.
   const seenLogo = new Set<string>();
   const clientLogos = (logosRes.data ?? [])
-    .filter((r: any) => r.client_logo_url && !seenLogo.has(r.client_logo_url) && seenLogo.add(r.client_logo_url))
+    .filter((r: any) => !!r.client_logo_url)
+    .filter((r: any) => {
+      const nom = (r.maitrise_ouvrage || '').trim();
+      const key = nom ? `n:${slugify(nom)}` : `u:${r.client_logo_url}`;
+      if (seenLogo.has(key)) return false;
+      seenLogo.add(key);
+      return true;
+    })
     .map((r: any) => ({ url: r.client_logo_url as string, nom: (r.maitrise_ouvrage as string) || 'Client' }));
 
   return (
