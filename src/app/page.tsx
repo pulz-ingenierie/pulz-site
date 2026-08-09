@@ -58,13 +58,8 @@ export default async function Home() {
       </header>
 
       {/* BANDEAU photo d'équipe */}
-      <div className="band" style={{ height: 460 }}>
-        <img
-          className="photo"
-          src={IMG.homeEquipe}
-          alt="L'équipe PULZ"
-          style={{ width: '100%', height: '100%', minHeight: 0, objectFit: 'cover', objectPosition: 'center 38%', transform: 'none' }}
-        />
+      <div className="band">
+        <img className="photo" src={IMG.homeEquipe} alt="L'équipe PULZ" />
       </div>
 
       {/* LE GROUPE EN BREF + COMPTEURS */}

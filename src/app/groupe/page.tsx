@@ -158,7 +158,7 @@ export default function GroupePage() {
       </section>
 
       {/* MEMBRES */}
-      <section className="g-mem">
+      <section className="g-mem" id="membres">
         <div className="wrap">
           <div className="head">
             <span className="eyebrow">Les membres du groupe</span>

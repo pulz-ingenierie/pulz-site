@@ -28,13 +28,13 @@ export default function ContactForm({ sujets, blue = false }: { sujets: string[]
   const lbl = { display: 'block', fontSize: 13, fontWeight: 700, color: blue ? '#EAF2FB' : 'var(--deep)', marginBottom: 8 } as const;
 
   const cardStyle = blue
-    ? { background: 'linear-gradient(160deg,#0F2E52 0%,var(--deep) 100%)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 16, padding: '38px 40px', boxShadow: '0 26px 60px rgba(10,37,64,.28)' }
-    : { background: '#fff', border: '1px solid var(--line)', borderRadius: 16, padding: '38px 40px', boxShadow: '0 18px 50px rgba(10,37,64,.10)' };
+    ? { background: 'linear-gradient(160deg,#0F2E52 0%,var(--deep) 100%)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 16, boxShadow: '0 26px 60px rgba(10,37,64,.28)' }
+    : { background: '#fff', border: '1px solid var(--line)', borderRadius: 16, boxShadow: '0 18px 50px rgba(10,37,64,.10)' };
 
   if (status === 'ok') return <div style={{ background: blue ? 'var(--deep)' : 'var(--paper-2)', padding: 40, borderRadius: 16, textAlign: 'center' }}><h2 style={{ color: blue ? '#fff' : 'var(--deep)' }}>Merci pour votre message.</h2><p style={{ color: blue ? '#B8CEE4' : 'var(--grey)', marginTop: 10 }}>L'équipe PULZ vous répondra sous 48 heures ouvrées.</p></div>;
 
   return (
-    <form onSubmit={submit} style={cardStyle}>
+    <form onSubmit={submit} className="cform" style={cardStyle}>
       <div className="cf-row">
         <div><label style={lbl}>Nom *</label><input style={inp} onFocus={onFocus} onBlur={onBlur} required value={form.nom} onChange={e => set('nom', e.target.value)} /></div>
         <div><label style={lbl}>Société</label><input style={inp} onFocus={onFocus} onBlur={onBlur} value={form.societe} onChange={e => set('societe', e.target.value)} /></div>
@@ -55,7 +55,7 @@ export default function ContactForm({ sujets, blue = false }: { sujets: string[]
         <textarea style={{ ...inp, minHeight: 140, resize: 'vertical' }} onFocus={onFocus} onBlur={onBlur} required value={form.message} onChange={e => set('message', e.target.value)} />
       </div>
       <label style={{ display: 'flex', gap: 11, alignItems: 'flex-start', marginBottom: 24, fontSize: 12.5, color: blue ? '#B8CEE4' : 'var(--grey)' }}>
-        <input type="checkbox" checked={form.consent} onChange={e => set('consent', e.target.checked)} style={{ marginTop: 2 }} />
+        <input type="checkbox" checked={form.consent} onChange={e => set('consent', e.target.checked)} style={{ marginTop: 2, flexShrink: 0, width: 16, height: 16 }} />
         J'accepte que ces informations soient utilisées pour me recontacter. Elles ne seront ni cédées ni revendues.
       </label>
       <button type="submit" disabled={status === 'sending'} style={{ background: blue ? 'var(--accent)' : 'var(--blue)', color: '#fff', fontWeight: 700, fontSize: 15, padding: '15px 34px', border: 'none', borderRadius: 9, cursor: 'pointer' }}>
