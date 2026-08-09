@@ -1,13 +1,13 @@
 /* ============================================================
    /references/[slug] — fiche référence (reference-*.html)
    ============================================================ */
-.ri{background:linear-gradient(180deg,#fff 0%,var(--paper-2) 100%);padding:66px 0}
+.ri{background:linear-gradient(180deg,var(--paper-2) 0%,#fff 100%);padding:66px 0}
 .ri .wrap{max-width:var(--maxw);margin:0 auto;padding:0 48px}
 .ri .bc{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:20px}
 .ri .bc a{color:var(--blue)}
 .ri .cat{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--blue);padding:6px 13px;border-radius:4px;margin-bottom:16px}
 .ri h1{font-size:44px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.08;margin:0 0 22px;max-width:22ch}
-.ri .desc{font-size:18px;color:var(--grey);line-height:1.6;margin-bottom:30px;max-width:62ch}
+.ri .desc{font-size:18px;color:var(--grey);line-height:1.6;margin-bottom:30px;max-width:92ch}
 .ri-facts{display:flex;flex-direction:column;gap:14px;margin-top:28px;max-width:60ch}
 .ri-fact{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:start}
 .ri-fact .k{font-size:13px;color:var(--grey-lt);font-weight:400}
@@ -16,15 +16,15 @@
 .ri-list li{position:relative;padding-left:16px;font-weight:500}
 .ri-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .ri-clientwrap{margin-top:36px}
-.ri-clientbox{display:inline-flex;align-items:center}
-.ri-clientbox img{max-height:70px;max-width:230px;object-fit:contain}
+.ri-clientbox{display:inline-flex;align-items:center;background:#fff;padding:16px 24px;border-radius:12px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(10,37,64,.08)}
+.ri-clientbox img{max-height:64px;max-width:220px;object-fit:contain}
 
 .rphotos{background:var(--deep);color:#fff;padding:84px 0}
 .rphotos .wrap{max-width:var(--maxw);margin:0 auto;padding:0 48px}
 .rphotos .eyebrow{color:var(--accent);margin-bottom:16px;display:block}
 .rphotos .fluo{margin-bottom:22px}
 .rphotos h2{font-size:42px;color:#fff;font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:18px;max-width:24ch}
-.rphotos .sub{font-size:17px;color:#B8CEE4;line-height:1.7;max-width:66ch;margin-bottom:14px}
+.rphotos .sub{font-size:17px;color:#B8CEE4;line-height:1.7;max-width:92ch;margin-bottom:14px}
 .rphotos .spectext{font-size:16px;color:#B8CEE4;line-height:1.8;max-width:66ch;margin-bottom:40px}
 .rphotos .spectext strong{color:#fff;font-weight:700}
 .rphotos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}

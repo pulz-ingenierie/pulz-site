@@ -8,6 +8,7 @@ import Counters, { type Stat } from '@/components/Counters';
 import HomeServices from '@/components/HomeServices';
 import ContactForm from './contact/ContactForm';
 import { createClient } from '@/lib/supabase-server';
+import { coverPhotoMap } from '@/lib/reference-photos';
 import { IMG } from '@/lib/images';
 import { services } from '@/content/home.services';
 import { HERO, BRIEF, STATS_FALLBACK, LOGOBAND, SOCS, SERVICES_CARDS, REFS_FALLBACK, CLIENTS } from '@/content/home';
@@ -20,7 +21,7 @@ export default async function Home() {
     sb.from('statistiques').select('valeur, suffixe, label').order('ordre'),
     sb
       .from('references_projets')
-      .select('slug, titre, categorie, localisation, description, a_la_une')
+      .select('id, slug, titre, categorie, localisation, description, a_la_une')
       .eq('statut', 'publie')
       .order('a_la_une', { ascending: false })
       .order('created_at', { ascending: false })
@@ -31,6 +32,7 @@ export default async function Home() {
 
   const stats: Stat[] = statsRes.data && statsRes.data.length ? (statsRes.data as Stat[]) : STATS_FALLBACK;
   const refs = refsRes.data ?? [];
+  const refCovers = await coverPhotoMap(sb, refs.map((r: any) => r.id));
   const sujets = (routesRes.data ?? []).map((r: any) => r.sujet);
   const p = Object.fromEntries((paramsRes.data ?? []).map((r: any) => [r.cle, r.valeur]));
 
@@ -147,6 +149,7 @@ export default async function Home() {
               ? refs.map((r: any) => (
                   <Link key={r.slug} className="rcard" href={`/references/${r.slug}`}>
                     <div className="ph">
+                      {refCovers[r.id] && <img src={refCovers[r.id]} alt={r.titre} />}
                       <span className="tag">{r.categorie}{r.localisation ? ` · ${r.localisation}` : ''}</span>
                     </div>
                     <div className="bd">

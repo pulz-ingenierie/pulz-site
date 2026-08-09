@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
 import RefGrid, { type Ref } from './RefGrid';
+import { coverPhotoMap } from '@/lib/reference-photos';
 import './references.css';
 
 export const revalidate = 60;
@@ -18,11 +19,13 @@ export default async function ReferencesPage() {
   const sb = createClient();
   const { data } = await sb
     .from('references_projets')
-    .select('slug, titre, categorie, localisation, description')
+    .select('id, slug, titre, categorie, localisation, description')
     .eq('statut', 'publie')
     .order('created_at', { ascending: false });
 
-  const refs = (data ?? []) as Ref[];
+  const rows = data ?? [];
+  const covers = await coverPhotoMap(sb, rows.map((r: any) => r.id));
+  const refs = rows.map((r: any) => ({ ...r, cover: covers[r.id] ?? null })) as Ref[];
 
   return (
     <>

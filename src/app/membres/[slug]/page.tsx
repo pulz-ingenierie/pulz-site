@@ -8,6 +8,7 @@ import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createClient } from '@/lib/supabase-server';
 import { IMG, membrePhoto, societeLogo, casquePhoto } from '@/lib/images';
+import { coverPhotoMap } from '@/lib/reference-photos';
 import { getSocieteContent } from '@/content/societes';
 import Metiers from './Metiers';
 import Equipe, { type Membre } from './Equipe';
@@ -34,6 +35,22 @@ async function getSociete(slug: string) {
   return { societe, membres };
 }
 
+// Références réelles liées à cette société (via reference_membres), publiées, avec couverture.
+async function getSocieteRefs(societeId: string) {
+  const sb = createClient();
+  const { data: rm } = await sb.from('reference_membres').select('reference_id').eq('societe_id', societeId);
+  const ids = (rm ?? []).map((r: any) => r.reference_id).filter(Boolean);
+  if (ids.length === 0) return [] as any[];
+  const { data: refs } = await sb
+    .from('references_projets')
+    .select('id, slug, titre, categorie, localisation, description')
+    .in('id', ids)
+    .eq('statut', 'publie')
+    .order('created_at', { ascending: false });
+  const covers = await coverPhotoMap(sb, (refs ?? []).map((r: any) => r.id));
+  return (refs ?? []).map((r: any) => ({ ...r, cover: covers[r.id] ?? null }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const data = await getSociete(params.slug);
   if (!data) return {};
@@ -49,6 +66,7 @@ export default async function SocietePage({ params }: { params: { slug: string }
   if (!data) notFound();
   const { societe, membres: membresDb } = data;
   const content = getSocieteContent(params.slug);
+  const socRefs = await getSocieteRefs(societe.id);
 
   const soc = societe.couleur || '#1E63C4';
   const styleVars = {
@@ -178,27 +196,40 @@ export default async function SocietePage({ params }: { params: { slug: string }
       {/* ÉQUIPE (client, volet CV) */}
       {membres.length > 0 && <Equipe membres={membres} />}
 
-      {/* RÉFÉRENCES société */}
-      {content && content.refs.length > 0 && (
+      {/* RÉFÉRENCES société — réelles (base) si disponibles, sinon contenu fixe */}
+      {(socRefs.length > 0 || (content && content.refs.length > 0)) && (
         <section className="srefs" id="refs">
           <div className="in">
             <div className="head">
               <span className="eyebrow">Références</span>
-              <h2>{content.refsTitre}</h2>
-              <p>{content.refsIntro}</p>
+              <h2>{content?.refsTitre ?? 'Nos réalisations'}</h2>
+              {content?.refsIntro && <p>{content.refsIntro}</p>}
             </div>
             <div className="sref-grid">
-              {content.refs.map((r, i) => (
-                <div key={i} className="sref">
-                  <div className="ph">
-                    <span className="cat">{r.cat}</span>
-                  </div>
-                  <div className="bd">
-                    <h3>{r.titre}</h3>
-                    <p>{r.texte}</p>
-                  </div>
-                </div>
-              ))}
+              {socRefs.length > 0
+                ? socRefs.map((r: any) => (
+                    <Link key={r.id} className="sref" href={`/references/${r.slug}`}>
+                      <div className="ph">
+                        {r.cover && <img src={r.cover} alt={r.titre} />}
+                        <span className="cat">{r.categorie}</span>
+                      </div>
+                      <div className="bd">
+                        <h3>{r.titre}</h3>
+                        {r.description && <p>{r.description}</p>}
+                      </div>
+                    </Link>
+                  ))
+                : content!.refs.map((r, i) => (
+                    <div key={i} className="sref">
+                      <div className="ph">
+                        <span className="cat">{r.cat}</span>
+                      </div>
+                      <div className="bd">
+                        <h3>{r.titre}</h3>
+                        <p>{r.texte}</p>
+                      </div>
+                    </div>
+                  ))}
             </div>
             <div className="more">
               <Link className="btn g" href="/references">Toutes les références du groupe</Link>

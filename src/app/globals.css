@@ -122,8 +122,9 @@ h1,h2,h3,h4{font-weight:800;letter-spacing:-.025em;line-height:1.08;color:var(--
 .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .rcard{border-radius:10px;overflow:hidden;background:#fff;transition:transform .35s var(--ease),box-shadow .35s;cursor:pointer;display:block}
 .rcard:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 28px 55px rgba(30,99,196,.22)}
-.rcard .ph{height:200px;background:linear-gradient(150deg,#123f6b,#0A2540);position:relative;display:flex;align-items:flex-end}
-.rcard .ph .tag{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#fff;text-transform:uppercase;background:var(--blue);padding:7px 14px}
+.rcard .ph{height:200px;background:linear-gradient(150deg,#123f6b,#0A2540);position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.rcard .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rcard .ph .tag{position:relative;z-index:1;font-size:11.5px;font-weight:700;letter-spacing:.04em;color:#fff;text-transform:uppercase;background:var(--blue);padding:7px 14px}
 .rcard .bd{padding:22px 24px}
 .rcard h3{font-size:18px;color:var(--deep);margin-bottom:8px;font-weight:800}
 .rcard p{font-size:13.5px;color:var(--grey);line-height:1.55}
