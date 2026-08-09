@@ -74,33 +74,25 @@ export default function GroupePage() {
         </div>
       </header>
 
-      {/* VOCATION + symbole en lévitation */}
+      {/* VOCATION — symbole en blason centré + texte en 3 colonnes */}
       <section className="g-voc">
         <div className="wrap">
-          <div>
-            <span className="eyebrow">Notre vocation</span>
-            <div className="fluo" />
-            <h2>Embarquer toutes les expertises du bâtiment</h2>
-            <p>
-              PULZ a pour vocation de réunir l'ensemble des expertises du bâtiment au sein d'un groupement
-              de maîtres d'œuvre partageant des valeurs fortes et communes, centré sur l'expression du
-              potentiel humain.
-            </p>
-            <p>
-              Au-delà d'un assemblage de compétences, PULZ est avant tout un groupe de jeunes chefs
-              d'entreprises passionnés, au service de leurs clients. Chaque collaborateur, chaque client,
-              chaque partenaire est une pièce essentielle d'un puzzle plus vaste, conçu pour inspirer et
-              rayonner.
-            </p>
-            <p>
-              Nous veillons au respect des délais, du budget et de la qualité à chaque étape, dans un
-              environnement où l'agilité, la passion et l'intégrité sont essentielles.
-            </p>
-          </div>
-          <div className="logo-stage">
-            <div className="logo-stack">
-              <img src={IMG.pulzSymbol} alt="Symbole PULZ Ingénierie" />
-              <span>PULZ</span>
+          <img className="voc-sym" src={IMG.pulzSymbol} alt="Symbole PULZ Ingénierie" />
+          <span className="eyebrow">Notre vocation</span>
+          <div className="fluo" />
+          <h2>Embarquer toutes les expertises du bâtiment</h2>
+          <div className="voc-cols">
+            <div className="c">
+              <strong>Un puzzle d'expertises</strong>
+              <p>Réunir l'ensemble des expertises du bâtiment au sein d'un groupement partageant des valeurs communes.</p>
+            </div>
+            <div className="c">
+              <strong>Des chefs passionnés</strong>
+              <p>Un groupe de jeunes chefs d'entreprises au service de leurs clients, centré sur le potentiel humain.</p>
+            </div>
+            <div className="c">
+              <strong>L'exigence à chaque étape</strong>
+              <p>Le respect des délais, du budget et de la qualité, dans l'agilité, la passion et l'intégrité.</p>
             </div>
           </div>
         </div>

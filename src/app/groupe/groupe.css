@@ -13,16 +13,16 @@
 /* mot accentué du hero en relief (sort de l'écran) */
 .g-hero h1 span{color:var(--accent);display:inline-block;filter:drop-shadow(0 10px 18px rgba(0,169,224,.35))}
 
-/* vocation */
+/* vocation — symbole en blason centré + texte en 3 colonnes */
 .g-voc{padding:80px 0;background:#fff}
-.g-voc .wrap{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.g-voc .eyebrow{margin-bottom:16px;display:block}
-.g-voc h2{font-size:38px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.15;margin-bottom:22px}
-.g-voc p{font-size:16px;color:var(--grey);line-height:1.8;margin-bottom:18px}
-.g-voc .logo-stage{display:flex;align-items:center;justify-content:center;position:relative;min-height:300px}
-.g-voc .logo-stack{display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
-.g-voc .logo-stack img{width:170px;max-width:70%;height:auto;object-fit:contain;margin:0 auto;filter:drop-shadow(0 22px 22px rgba(10,37,64,.28))}
-.g-voc .logo-stack span{font-weight:900;font-size:50px;color:var(--deep);letter-spacing:.1em;line-height:1;text-shadow:0 12px 22px rgba(10,37,64,.22)}
+.g-voc .wrap{text-align:center}
+.g-voc .voc-sym{width:64px;margin:0 auto 22px;filter:drop-shadow(0 14px 18px rgba(10,37,64,.18))}
+.g-voc .eyebrow{display:block}
+.g-voc .fluo{margin:14px auto 22px}
+.g-voc h2{font-size:38px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.15;max-width:20ch;margin:0 auto}
+.g-voc .voc-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:44px;text-align:left}
+.g-voc .voc-cols .c strong{display:block;color:var(--deep);font-weight:800;font-size:16px;margin-bottom:8px}
+.g-voc .voc-cols .c p{font-size:16px;color:var(--grey);line-height:1.8}
 
 /* valeurs */
 .g-val{padding:88px 0;background:var(--deep);color:#fff}
@@ -51,5 +51,6 @@
 .g-cta a{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:15px;padding:16px 34px;border-radius:4px;transition:.2s}
 .g-cta a:hover{background:var(--deep)}
 
-@media(max-width:1024px){.g-voc .wrap{grid-template-columns:1fr;gap:36px}.g-val-grid{grid-template-columns:1fr}}
+@media(max-width:1024px){.g-val-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.g-voc .voc-cols{grid-template-columns:1fr;gap:26px;margin-top:32px}}
 @media(max-width:680px){.g-hero h1{font-size:38px}.g-val h2,.g-mem h2{font-size:30px}.g-hero{min-height:460px}.g-hero-overlay{background:linear-gradient(160deg,rgba(10,37,64,.94) 0%,rgba(10,37,64,.82) 100%)}}
