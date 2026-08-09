@@ -35,11 +35,11 @@ export default function ContactForm({ sujets, blue = false }: { sujets: string[]
 
   return (
     <form onSubmit={submit} style={cardStyle}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 20 }}>
+      <div className="cf-row">
         <div><label style={lbl}>Nom *</label><input style={inp} onFocus={onFocus} onBlur={onBlur} required value={form.nom} onChange={e => set('nom', e.target.value)} /></div>
         <div><label style={lbl}>Société</label><input style={inp} onFocus={onFocus} onBlur={onBlur} value={form.societe} onChange={e => set('societe', e.target.value)} /></div>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18, marginBottom: 20 }}>
+      <div className="cf-row">
         <div><label style={lbl}>E-mail *</label><input style={inp} onFocus={onFocus} onBlur={onBlur} type="email" required value={form.email} onChange={e => set('email', e.target.value)} /></div>
         <div><label style={lbl}>Téléphone</label><input style={inp} onFocus={onFocus} onBlur={onBlur} value={form.telephone} onChange={e => set('telephone', e.target.value)} /></div>
       </div>

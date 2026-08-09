@@ -191,7 +191,7 @@ export default async function Home() {
       {/* CONTACT */}
       <section className="contact" id="contact">
         <div className="wrap">
-          <div style={{ display: 'grid', gridTemplateColumns: '.85fr 1.15fr', gap: 24, alignItems: 'stretch' }}>
+          <div className="contact-grid">
             <div className="left" style={{ background: 'var(--deep)', color: '#fff', padding: '48px 44px', borderRadius: 16 }}>
               <span className="eyebrow" style={{ color: 'var(--accent)', display: 'block', marginBottom: 18 }}>Contact</span>
               <h2 style={{ color: '#fff', fontSize: 32, marginBottom: 16, maxWidth: '14ch' }}>Transformez vos idées en réalité</h2>
