@@ -48,8 +48,19 @@ export default function GroupePage() {
     <>
       <Nav />
 
-      {/* HERO */}
+      {/* HERO — fond vidéo + voile + contenu */}
       <header className="g-hero">
+        <video
+          className="g-hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={IMG.groupeHeroPoster}
+        >
+          <source src={IMG.groupeHeroVideo} type="video/mp4" />
+        </video>
+        <div className="g-hero-overlay" />
         <div className="wrap">
           <span className="eyebrow">Le groupe</span>
           <div className="fluo" />

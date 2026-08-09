@@ -35,6 +35,10 @@ export const IMG = {
   // Photo d'équipe du bandeau d'accueil
   homeEquipe: photoUrl('home', 'pulz-equipe.jpg'),
 
+  // Fond vidéo du hero de la page Groupe (+ poster de repli)
+  groupeHeroVideo: photoUrl('home', 'pulz-hero-v7.mp4'),
+  groupeHeroPoster: photoUrl('home', 'poster-v7.jpg'),
+
   // Logos des 4 sociétés (version bloc)
   societes: {
     buscot: photoUrl('logos', 'buscot.png'),
