@@ -17,7 +17,7 @@ export const revalidate = 60;
 
 export default async function Home() {
   const sb = createPublicClient();
-  const [statsRes, refsRes, routesRes, paramsRes] = await Promise.all([
+  const [statsRes, refsRes, routesRes, paramsRes, logosRes] = await Promise.all([
     sb.from('statistiques').select('valeur, suffixe, label').order('ordre'),
     sb
       .from('references_projets')
@@ -28,6 +28,7 @@ export default async function Home() {
       .limit(6),
     sb.from('routage_contact').select('sujet').order('ordre'),
     sb.from('parametres').select('cle, valeur'),
+    sb.from('references_projets').select('client_logo_url, maitrise_ouvrage').eq('statut', 'publie').not('client_logo_url', 'is', null),
   ]);
 
   const stats: Stat[] = statsRes.data && statsRes.data.length ? (statsRes.data as Stat[]) : STATS_FALLBACK;
@@ -35,6 +36,12 @@ export default async function Home() {
   const refCovers = await coverPhotoMap(sb, refs.map((r: any) => r.id));
   const sujets = (routesRes.data ?? []).map((r: any) => r.sujet);
   const p = Object.fromEntries((paramsRes.data ?? []).map((r: any) => [r.cle, r.valeur]));
+
+  // Logos clients (dédupliqués par URL) pour la bande « Ils nous font confiance ».
+  const seenLogo = new Set<string>();
+  const clientLogos = (logosRes.data ?? [])
+    .filter((r: any) => r.client_logo_url && !seenLogo.has(r.client_logo_url) && seenLogo.add(r.client_logo_url))
+    .map((r: any) => ({ url: r.client_logo_url as string, nom: (r.maitrise_ouvrage as string) || 'Client' }));
 
   return (
     <>
@@ -175,11 +182,29 @@ export default async function Home() {
       <section className="clients">
         <div className="wrap">
           <div className="lbl">Ils nous font confiance</div>
-          <div className="row">
-            {CLIENTS.map((c) => (
-              <span key={c} className="c">{c}</span>
-            ))}
-          </div>
+          {clientLogos.length > 0 ? (
+            clientLogos.length > 6 ? (
+              <div className="clogos-marquee">
+                <div className="clogos-track">
+                  {[...clientLogos, ...clientLogos].map((c, i) => (
+                    <img key={i} className="clogo" src={c.url} alt={c.nom} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="clogos-row">
+                {clientLogos.map((c, i) => (
+                  <img key={i} className="clogo" src={c.url} alt={c.nom} />
+                ))}
+              </div>
+            )
+          ) : (
+            <div className="row">
+              {CLIENTS.map((c) => (
+                <span key={c} className="c">{c}</span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
