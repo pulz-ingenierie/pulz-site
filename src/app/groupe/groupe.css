@@ -53,4 +53,4 @@
 
 @media(max-width:1024px){.g-val-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.g-voc .voc-cols{grid-template-columns:1fr;gap:26px;margin-top:32px}}
-@media(max-width:680px){.g-hero h1{font-size:38px}.g-val h2,.g-mem h2{font-size:30px}.g-hero{min-height:460px}.g-hero-overlay{background:linear-gradient(160deg,rgba(10,37,64,.94) 0%,rgba(10,37,64,.82) 100%)}}
+@media(max-width:680px){.g-hero h1{font-size:38px}.g-val h2,.g-mem h2{font-size:30px}.g-hero{min-height:460px}.g-hero-overlay{background:linear-gradient(165deg,rgba(10,37,64,.82) 0%,rgba(10,37,64,.55) 55%,rgba(10,37,64,.32) 100%)}}

@@ -42,8 +42,10 @@ export default async function ArticleDetail({ params }: { params: { slug: string
   // (selon la façon dont il a été saisi/importé) : on normalise avant de découper.
   const raw = (a.contenu || '').replace(/\\n/g, '\n');
   const paras = raw.split(/\n\n+/).map((s: string) => s.trim()).filter(Boolean);
-  const chapo = paras[0] || a.extrait;
-  const body = paras.slice(1);
+  // Le chapô est l'EXTRAIT saisi ; à défaut seulement, on prend le 1er paragraphe.
+  const hasExtrait = !!(a.extrait && a.extrait.trim());
+  const chapo = hasExtrait ? a.extrait.trim() : (paras[0] || '');
+  const body = hasExtrait ? paras : paras.slice(1);
   const mots = (a.titre as string).split(' ');
   const rt = readTime(a.contenu || '');
 

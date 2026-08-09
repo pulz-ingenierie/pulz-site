@@ -7,6 +7,7 @@ const ITEMS = [
   { href: '/admin', label: 'Tableau de bord', exact: true, icon: 'M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z' },
   { href: '/admin/references', label: 'Références', icon: 'M4 4h16v16H4zM4 9h16M9 9v11' },
   { href: '/admin/actualites', label: 'Actualités', icon: 'M4 5h16v14H4zM8 9h8M8 13h8M8 17h5' },
+  { href: '/admin/compteurs', label: 'Compteurs', icon: 'M5 21V9M12 21V4M19 21v-7' },
   { href: '/admin/messages', label: 'Messages', icon: 'M4 5h16v11H8l-4 4z' },
 ];
 
