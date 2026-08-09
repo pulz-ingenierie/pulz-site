@@ -1,7 +1,9 @@
 /* ============================================================
    /references/[slug] — fiche référence (reference-*.html)
    ============================================================ */
-.ri{background:linear-gradient(180deg,var(--paper-2) 0%,#fff 100%);padding:66px 0}
+/* Dégradé diagonal : blanc au coin bas-gauche (là où est le logo client) -> gris au coin haut-droit.
+   Ainsi les logos à fond blanc se fondent dans le héro (pas de rectangle blanc visible). */
+.ri{background:linear-gradient(to top right,#fff 0%,#fff 42%,var(--paper-2) 100%);padding:66px 0}
 .ri .wrap{max-width:var(--maxw);margin:0 auto;padding:0 48px}
 .ri .bc{font-size:13px;font-weight:600;color:var(--grey);margin-bottom:20px}
 .ri .bc a{color:var(--blue)}
@@ -16,8 +18,8 @@
 .ri-list li{position:relative;padding-left:16px;font-weight:500}
 .ri-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .ri-clientwrap{margin-top:36px}
-.ri-clientbox{display:inline-flex;align-items:center;background:#fff;padding:16px 24px;border-radius:12px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(10,37,64,.08)}
-.ri-clientbox img{max-height:64px;max-width:220px;object-fit:contain}
+.ri-clientbox{display:inline-flex;align-items:center}
+.ri-clientbox img{max-height:70px;max-width:230px;object-fit:contain}
 
 .rphotos{background:var(--deep);color:#fff;padding:84px 0}
 .rphotos .wrap{max-width:var(--maxw);margin:0 auto;padding:0 48px}
