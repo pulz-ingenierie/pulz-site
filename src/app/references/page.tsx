@@ -2,7 +2,7 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import RefGrid, { type Ref } from './RefGrid';
 import { coverPhotoMap } from '@/lib/reference-photos';
 import './references.css';
@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 export default async function ReferencesPage() {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data } = await sb
     .from('references_projets')
     .select('id, slug, titre, categorie, localisation, description')

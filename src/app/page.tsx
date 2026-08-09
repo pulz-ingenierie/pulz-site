@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 import Counters, { type Stat } from '@/components/Counters';
 import HomeServices from '@/components/HomeServices';
 import ContactForm from './contact/ContactForm';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import { coverPhotoMap } from '@/lib/reference-photos';
 import { IMG } from '@/lib/images';
 import { services } from '@/content/home.services';
@@ -16,7 +16,7 @@ import { HERO, BRIEF, STATS_FALLBACK, LOGOBAND, SOCS, SERVICES_CARDS, REFS_FALLB
 export const revalidate = 60;
 
 export default async function Home() {
-  const sb = createClient();
+  const sb = createPublicClient();
   const [statsRes, refsRes, routesRes, paramsRes] = await Promise.all([
     sb.from('statistiques').select('valeur, suffixe, label').order('ordre'),
     sb

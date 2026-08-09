@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 
 export default async function Footer() {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: params } = await sb.from('parametres').select('cle, valeur');
   const p = Object.fromEntries((params ?? []).map((r: any) => [r.cle, r.valeur]));
   const annee = new Date().getFullYear();

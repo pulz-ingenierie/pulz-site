@@ -3,14 +3,21 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import { societeLogo } from '@/lib/images';
 import './reference.css';
 
 export const revalidate = 60;
 
+// Pré-génère au build les fiches publiées (les nouvelles restent rendues à la demande puis mises en cache).
+export async function generateStaticParams() {
+  const sb = createPublicClient();
+  const { data } = await sb.from('references_projets').select('slug').eq('statut', 'publie');
+  return (data ?? []).map((r: any) => ({ slug: r.slug }));
+}
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: ref } = await sb
     .from('references_projets')
     .select('titre, seo_titre, seo_description, description')
@@ -21,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ReferenceDetail({ params }: { params: { slug: string } }) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: ref } = await sb
     .from('references_projets')
     .select('*')

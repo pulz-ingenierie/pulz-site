@@ -2,12 +2,12 @@
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import ContactForm from './ContactForm';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 
 export const revalidate = 300;
 
 export default async function ContactPage() {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: routes } = await sb.from('routage_contact').select('sujet').order('ordre');
   const sujets = (routes ?? []).map((r: any) => r.sujet);
 

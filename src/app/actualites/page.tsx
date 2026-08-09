@@ -1,7 +1,7 @@
 // LISTE ACTUALITÉS — design maquette (pulz-actualites.html) : 1 à la une + grille 3 col, filtres.
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import ActuFeed, { type Actu } from './ActuFeed';
 import './actualites.css';
 
@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 export default async function ActualitesPage() {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data } = await sb
     .from('actualites')
     .select('slug, titre, categorie, date_publication, extrait, image_url')

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import { IMG, membrePhoto, societeLogo, casquePhoto } from '@/lib/images';
 import { coverPhotoMap } from '@/lib/reference-photos';
 import { getSocieteContent } from '@/content/societes';
@@ -16,8 +16,15 @@ import './membres.css';
 
 export const revalidate = 60;
 
+// Pré-génère au build les pages société.
+export async function generateStaticParams() {
+  const sb = createPublicClient();
+  const { data } = await sb.from('societes').select('slug');
+  return (data ?? []).map((s: any) => ({ slug: s.slug }));
+}
+
 async function getSociete(slug: string) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: societe } = await sb.from('societes').select('*').eq('slug', slug).single();
   if (!societe) return null;
   // On récupère tous les membres visibles puis on filtre : membres de la société
@@ -37,7 +44,7 @@ async function getSociete(slug: string) {
 
 // Références réelles liées à cette société (via reference_membres), publiées, avec couverture.
 async function getSocieteRefs(societeId: string) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: rm } = await sb.from('reference_membres').select('reference_id').eq('societe_id', societeId);
   const ids = (rm ?? []).map((r: any) => r.reference_id).filter(Boolean);
   if (ids.length === 0) return [] as any[];

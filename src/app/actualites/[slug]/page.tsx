@@ -3,12 +3,19 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { createClient } from '@/lib/supabase-server';
+import { createPublicClient } from '@/lib/supabase-public';
 import { dateFr } from '@/lib/slug';
 import ShareRail from './ShareRail';
 import './article.css';
 
 export const revalidate = 60;
+
+// Pré-génère au build les articles publiés (les nouveaux restent rendus à la demande puis mis en cache).
+export async function generateStaticParams() {
+  const sb = createPublicClient();
+  const { data } = await sb.from('actualites').select('slug').eq('statut', 'publie');
+  return (data ?? []).map((r: any) => ({ slug: r.slug }));
+}
 
 function readTime(txt: string) {
   const words = (txt || '').split(/\s+/).filter(Boolean).length;
@@ -16,7 +23,7 @@ function readTime(txt: string) {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: a } = await sb
     .from('actualites')
     .select('titre, seo_titre, seo_description, extrait')
@@ -27,7 +34,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function ArticleDetail({ params }: { params: { slug: string } }) {
-  const sb = createClient();
+  const sb = createPublicClient();
   const { data: a } = await sb.from('actualites').select('*').eq('slug', params.slug).eq('statut', 'publie').single();
   if (!a) notFound();
 
