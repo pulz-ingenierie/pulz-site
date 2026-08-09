@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import { createPublicClient } from '@/lib/supabase-public';
+import { coverPhotoMap } from '@/lib/reference-photos';
 import { societeLogo } from '@/lib/images';
 import './reference.css';
 
@@ -63,11 +64,12 @@ export default async function ReferenceDetail({ params }: { params: { slug: stri
   // Réalisations similaires (même catégorie)
   const { data: similaires } = await sb
     .from('references_projets')
-    .select('slug, titre, categorie, localisation')
+    .select('id, slug, titre, categorie, localisation')
     .eq('statut', 'publie')
     .eq('categorie', ref.categorie)
     .neq('slug', params.slug)
     .limit(3);
+  const simCovers = await coverPhotoMap(sb, (similaires ?? []).map((s: any) => s.id));
 
   const showPhotos = photos.length > 0 || specificites.length > 0;
   const cells = photos.length > 0 ? photos : [null, null, null];
@@ -197,6 +199,7 @@ export default async function ReferenceDetail({ params }: { params: { slug: stri
               {similaires.map((s: any) => (
                 <Link key={s.slug} className="rmini" href={`/references/${s.slug}`}>
                   <div className="ph">
+                    {simCovers[s.id] && <img src={simCovers[s.id]} alt={s.titre} />}
                     <span className="cat">{s.categorie}</span>
                   </div>
                   <div className="bd">

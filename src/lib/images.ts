@@ -32,8 +32,10 @@ export const IMG = {
   logoDetoure: photoUrl('logos', 'pulz-detoure.png'),// logo détouré (fond foncé)
   pulzSymbol: photoUrl('logos', 'pulz-symbol.png'),  // symbole « P » (lévitation /groupe)
 
-  // Photo d'équipe du bandeau d'accueil
-  homeEquipe: photoUrl('home', 'pulz-equipe.jpg'),
+  // Photo d'équipe du bandeau d'accueil.
+  // Le suffixe ?v=N force le rechargement quand on remplace le fichier au même chemin
+  // (sinon le cache navigateur/CDN ressert l'ancienne image). Incrémenter à chaque remplacement.
+  homeEquipe: photoUrl('home', 'pulz-equipe.jpg') + '?v=2',
 
   // Fond vidéo du hero de la page Groupe (+ poster de repli)
   groupeHeroVideo: photoUrl('home', 'pulz-hero-v7.mp4'),
