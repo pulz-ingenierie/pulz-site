@@ -56,11 +56,16 @@ export default async function GroupePage() {
     .list('clients', { limit: 200, sortBy: { column: 'name', order: 'asc' } });
   const clientLogos = (files ?? [])
     .filter((f) => /\.(png|jpe?g|svg|webp|avif)$/i.test(f.name))
-    .map((f) => ({
-      url: photoUrl('clients', f.name),
-      // alt propre : on retire le préfixe d'ordre (ex. « 01_ ») et l'extension.
-      alt: f.name.replace(/\.[^.]+$/, '').replace(/^\d+[_-]?/, '').replace(/[-_]+/g, ' ').trim(),
-    }));
+    .map((f) => {
+      // Cache-bust basé sur la date de modif du fichier : un re-upload (même nom)
+      // change l'URL -> le navigateur/CDN recharge la nouvelle version automatiquement.
+      const ver = f.updated_at ? Date.parse(f.updated_at) : 0;
+      return {
+        url: photoUrl('clients', f.name) + (ver ? `?v=${ver}` : ''),
+        // alt propre : on retire le préfixe d'ordre (ex. « 01_ ») et l'extension.
+        alt: f.name.replace(/\.[^.]+$/, '').replace(/^\d+[_-]?/, '').replace(/[-_]+/g, ' ').trim(),
+      };
+    });
 
   return (
     <>
