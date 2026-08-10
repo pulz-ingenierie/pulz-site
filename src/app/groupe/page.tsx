@@ -3,8 +3,13 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { IMG } from '@/lib/images';
+import { IMG, photoUrl } from '@/lib/images';
+import { createPublicClient } from '@/lib/supabase-public';
 import './groupe.css';
+
+// ISR : la grille de logos se reconstruit périodiquement à partir du dossier
+// Supabase photos/clients/ (ajout/retrait d'un logo reflété sans toucher au code).
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: 'Le groupe PULZ — Groupement de maîtrise d\'œuvre en Hauts-de-France',
@@ -43,7 +48,20 @@ const SOCIETES = [
   },
 ];
 
-export default function GroupePage() {
+export default async function GroupePage() {
+  // Logos clients listés dynamiquement depuis le dossier Supabase photos/clients/.
+  const sb = createPublicClient();
+  const { data: files } = await sb.storage
+    .from('photos')
+    .list('clients', { limit: 200, sortBy: { column: 'name', order: 'asc' } });
+  const clientLogos = (files ?? [])
+    .filter((f) => /\.(png|jpe?g|svg|webp|avif)$/i.test(f.name))
+    .map((f) => ({
+      url: photoUrl('clients', f.name),
+      // alt propre : on retire le préfixe d'ordre (ex. « 01_ ») et l'extension.
+      alt: f.name.replace(/\.[^.]+$/, '').replace(/^\d+[_-]?/, '').replace(/[-_]+/g, ' ').trim(),
+    }));
+
   return (
     <>
       <Nav />
@@ -177,6 +195,28 @@ export default function GroupePage() {
           </div>
         </div>
       </section>
+
+      {/* ILS NOUS FONT CONFIANCE — logos clients (dossier Supabase photos/clients/) */}
+      {clientLogos.length > 0 && (
+        <section className="g-clients">
+          <div className="wrap">
+            <div className="head">
+              <span className="eyebrow">Références</span>
+              <div className="fluo" />
+              <h2>Ils nous font confiance</h2>
+              <p>
+                Plus de 60 maîtres d'ouvrage, promoteurs, bailleurs, collectivités et grands comptes nous
+                confient leurs projets.
+              </p>
+            </div>
+            <div className="gc-grid">
+              {clientLogos.map((c, i) => (
+                <img key={i} className="gc-logo" src={c.url} alt={c.alt} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="g-cta">

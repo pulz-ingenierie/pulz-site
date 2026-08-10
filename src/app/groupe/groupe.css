@@ -44,6 +44,17 @@
 .g-mem h2{font-size:42px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
 .g-mem .head p{font-size:17px;color:var(--grey);line-height:1.7}
 
+/* ils nous font confiance — logos clients (sans carte ni bordure) */
+.g-clients{padding:88px 0;background:#fff}
+.g-clients .head{text-align:center;max-width:60ch;margin:0 auto 54px}
+.g-clients .head .eyebrow{color:var(--blue);display:block}
+.g-clients .head .fluo{margin:14px auto 22px}
+.g-clients .head h2{font-size:38px;font-weight:900;color:var(--deep);letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
+.g-clients .head p{font-size:16px;color:var(--grey);line-height:1.7}
+.g-clients .gc-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:40px;align-items:center;justify-items:center}
+.g-clients .gc-logo{height:55px;width:auto;max-width:100%;object-fit:contain;opacity:.85;transition:opacity .2s}
+.g-clients .gc-logo:hover{opacity:1}
+
 /* CTA */
 .g-cta{padding:84px 0;background:var(--paper-2);text-align:center}
 .g-cta h2{font-size:34px;color:var(--deep);margin-bottom:16px;font-weight:900;letter-spacing:-.02em}
@@ -51,6 +62,7 @@
 .g-cta a{display:inline-block;background:var(--blue);color:#fff;font-weight:700;font-size:15px;padding:16px 34px;border-radius:4px;transition:.2s}
 .g-cta a:hover{background:var(--deep)}
 
-@media(max-width:1024px){.g-val-grid{grid-template-columns:1fr}}
+@media(max-width:1024px){.g-val-grid{grid-template-columns:1fr}.g-clients .gc-grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:760px){.g-voc .voc-cols{grid-template-columns:1fr;gap:26px;margin-top:32px}}
+@media(max-width:680px){.g-clients .gc-grid{grid-template-columns:repeat(3,1fr);gap:30px}}
 @media(max-width:680px){.g-hero h1{font-size:38px}.g-val h2,.g-mem h2{font-size:30px}.g-hero{min-height:460px}.g-hero-overlay{background:linear-gradient(165deg,rgba(10,37,64,.82) 0%,rgba(10,37,64,.55) 55%,rgba(10,37,64,.32) 100%)}}
