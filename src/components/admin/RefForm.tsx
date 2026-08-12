@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase-browser';
 import { slugify } from '@/lib/slug';
 import AiSeoButton from './AiSeoButton';
 import PhotoUpload, { type UploadedPhoto } from './PhotoUpload';
+import ClientLogoPicker from './ClientLogoPicker';
 
 const CATEGORIES = [
   'Logement',
@@ -234,20 +235,6 @@ export default function RefForm({ initial }: { initial: RefRecord | null }) {
     await applyOrder(photos.filter((p) => p.id !== photoId));
   }
 
-  // Envoie une image de la galerie vers le champ « logo client » (et la retire de la galerie).
-  async function setClientLogo(p: Photo) {
-    const sb = createClient();
-    await sb.from('references_projets').update({ client_logo_url: p.url }).eq('id', initial!.id);
-    set('client_logo_url', p.url);
-    await removePhoto(p.id);
-  }
-
-  async function clearClientLogo() {
-    const sb = createClient();
-    await sb.from('references_projets').update({ client_logo_url: null }).eq('id', initial!.id);
-    set('client_logo_url', null);
-  }
-
   const seoTLen = (f.seo_titre || '').length;
   const seoDLen = (f.seo_description || '').length;
 
@@ -349,23 +336,15 @@ export default function RefForm({ initial }: { initial: RefRecord | null }) {
       </div>
 
       <div className="acard">
+        <h2>Logo du client</h2>
+        <ClientLogoPicker value={f.client_logo_url} onChange={(url) => set('client_logo_url', url)} />
+      </div>
+
+      <div className="acard">
         <h2>Photos du projet</h2>
         {editing ? (
           <>
-            {/* Logo du client (champ dédié, affiché séparément sur la fiche publique) */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap', marginBottom: 18, paddingBottom: 18, borderBottom: '1px solid var(--line)' }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--deep)' }}>Logo du client :</div>
-              {f.client_logo_url ? (
-                <>
-                  <img src={f.client_logo_url} alt="Logo client" style={{ height: 46, maxWidth: 170, objectFit: 'contain', border: '1px solid var(--line)', borderRadius: 8, padding: 6, background: '#fff' }} />
-                  <button type="button" className="mini del" onClick={clearClientLogo}>Retirer</button>
-                </>
-              ) : (
-                <span className="hint" style={{ margin: 0 }}>aucun — clique « Logo client » sur l'image concernée ci-dessous.</span>
-              )}
-            </div>
-
-            <p className="hint">La 1ʳᵉ photo est la couverture. Réordonne avec ↑/↓, choisis la couverture (★), ou envoie une image vers le logo client. L'IA peut renommer les fichiers « appareil photo ».</p>
+            <p className="hint">La 1ʳᵉ photo est la couverture. Réordonne avec ↑/↓, choisis la couverture (★). L'IA peut renommer les fichiers « appareil photo ».</p>
             <PhotoUpload folder="references" multiple onUploaded={onUploaded} />
             {photos.length > 0 && (
               <div className="gallery">
@@ -380,7 +359,6 @@ export default function RefForm({ initial }: { initial: RefRecord | null }) {
                         <button type="button" className="mini" onClick={() => movePhoto(i, -1)} disabled={i === 0} title="Monter">↑</button>
                         <button type="button" className="mini" onClick={() => movePhoto(i, 1)} disabled={i === photos.length - 1} title="Descendre">↓</button>
                         {i !== 0 && <button type="button" className="mini" onClick={() => makeCover(i)} title="Définir comme couverture">★ Couv.</button>}
-                        <button type="button" className="mini" onClick={() => setClientLogo(p)} title="Utiliser comme logo client">Logo client</button>
                         {p.a_renommer && <button type="button" className="mini ai" onClick={() => renameWithAI(p.id, p.url)}>IA</button>}
                         <button type="button" className="mini del" onClick={() => removePhoto(p.id)}>Suppr.</button>
                       </div>

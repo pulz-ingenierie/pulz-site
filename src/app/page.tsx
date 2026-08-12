@@ -9,7 +9,7 @@ import HomeServices from '@/components/HomeServices';
 import ContactForm from './contact/ContactForm';
 import { createPublicClient } from '@/lib/supabase-public';
 import { coverPhotoMap } from '@/lib/reference-photos';
-import { slugify } from '@/lib/slug';
+import { listClientLogos, busted } from '@/lib/client-logos';
 import { IMG } from '@/lib/images';
 import { services } from '@/content/home.services';
 import { HERO, BRIEF, STATS_FALLBACK, LOGOBAND, SOCS, SERVICES_CARDS, REFS_FALLBACK, CLIENTS } from '@/content/home';
@@ -18,7 +18,7 @@ export const revalidate = 60;
 
 export default async function Home() {
   const sb = createPublicClient();
-  const [statsRes, refsRes, routesRes, paramsRes, logosRes] = await Promise.all([
+  const [statsRes, refsRes, routesRes, paramsRes, clientLogos] = await Promise.all([
     sb.from('statistiques').select('valeur, suffixe, label').order('ordre'),
     sb
       .from('references_projets')
@@ -29,7 +29,8 @@ export default async function Home() {
       .limit(6),
     sb.from('routage_contact').select('sujet').order('ordre'),
     sb.from('parametres').select('cle, valeur'),
-    sb.from('references_projets').select('client_logo_url, maitrise_ouvrage').eq('statut', 'publie').not('client_logo_url', 'is', null),
+    // Bande « Ils nous font confiance » = bibliothèque de logos photos/clients/.
+    listClientLogos(sb),
   ]);
 
   const stats: Stat[] = statsRes.data && statsRes.data.length ? (statsRes.data as Stat[]) : STATS_FALLBACK;
@@ -37,21 +38,6 @@ export default async function Home() {
   const refCovers = await coverPhotoMap(sb, refs.map((r: any) => r.id));
   const sujets = (routesRes.data ?? []).map((r: any) => r.sujet);
   const p = Object.fromEntries((paramsRes.data ?? []).map((r: any) => [r.cle, r.valeur]));
-
-  // Logos clients pour « Ils nous font confiance », dédupliqués par NOM du client
-  // (le même client sur 2 références a 2 fichiers logo distincts -> URLs différentes) ;
-  // repli sur l'URL quand la maîtrise d'ouvrage n'est pas renseignée.
-  const seenLogo = new Set<string>();
-  const clientLogos = (logosRes.data ?? [])
-    .filter((r: any) => !!r.client_logo_url)
-    .filter((r: any) => {
-      const nom = (r.maitrise_ouvrage || '').trim();
-      const key = nom ? `n:${slugify(nom)}` : `u:${r.client_logo_url}`;
-      if (seenLogo.has(key)) return false;
-      seenLogo.add(key);
-      return true;
-    })
-    .map((r: any) => ({ url: r.client_logo_url as string, nom: (r.maitrise_ouvrage as string) || 'Client' }));
 
   return (
     <>
@@ -197,14 +183,14 @@ export default async function Home() {
               <div className="clogos-marquee">
                 <div className="clogos-track">
                   {[...clientLogos, ...clientLogos].map((c, i) => (
-                    <img key={i} className="clogo" src={c.url} alt={c.nom} />
+                    <img key={i} className="clogo" src={busted(c)} alt={c.alt} />
                   ))}
                 </div>
               </div>
             ) : (
               <div className="clogos-row">
                 {clientLogos.map((c, i) => (
-                  <img key={i} className="clogo" src={c.url} alt={c.nom} />
+                  <img key={i} className="clogo" src={busted(c)} alt={c.alt} />
                 ))}
               </div>
             )

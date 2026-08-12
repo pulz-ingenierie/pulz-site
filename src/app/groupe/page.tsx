@@ -3,8 +3,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
-import { IMG, photoUrl } from '@/lib/images';
+import { IMG } from '@/lib/images';
 import { createPublicClient } from '@/lib/supabase-public';
+import { listClientLogos, busted } from '@/lib/client-logos';
 import './groupe.css';
 
 // ISR : la grille de logos se reconstruit périodiquement à partir du dossier
@@ -49,23 +50,9 @@ const SOCIETES = [
 ];
 
 export default async function GroupePage() {
-  // Logos clients listés dynamiquement depuis le dossier Supabase photos/clients/.
+  // Logos clients depuis la bibliothèque partagée photos/clients/ (même source que la home).
   const sb = createPublicClient();
-  const { data: files } = await sb.storage
-    .from('photos')
-    .list('clients', { limit: 200, sortBy: { column: 'name', order: 'asc' } });
-  const clientLogos = (files ?? [])
-    .filter((f) => /\.(png|jpe?g|svg|webp|avif)$/i.test(f.name))
-    .map((f) => {
-      // Cache-bust basé sur la date de modif du fichier : un re-upload (même nom)
-      // change l'URL -> le navigateur/CDN recharge la nouvelle version automatiquement.
-      const ver = f.updated_at ? Date.parse(f.updated_at) : 0;
-      return {
-        url: photoUrl('clients', f.name) + (ver ? `?v=${ver}` : ''),
-        // alt propre : on retire le préfixe d'ordre (ex. « 01_ ») et l'extension.
-        alt: f.name.replace(/\.[^.]+$/, '').replace(/^\d+[_-]?/, '').replace(/[-_]+/g, ' ').trim(),
-      };
-    });
+  const clientLogos = await listClientLogos(sb);
 
   return (
     <>
@@ -216,7 +203,7 @@ export default async function GroupePage() {
             </div>
             <div className="gc-grid">
               {clientLogos.map((c, i) => (
-                <img key={i} className="gc-logo" src={c.url} alt={c.alt} />
+                <img key={i} className="gc-logo" src={busted(c)} alt={c.alt} />
               ))}
             </div>
           </div>
