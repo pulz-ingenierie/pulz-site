@@ -47,6 +47,8 @@ export default function ClientLogoPicker({ value, onChange }: { value?: string |
       }
       await reload();
       if (lastUrl) onChange(lastUrl); // sélectionne le dernier logo ajouté
+      // Régénère /groupe et la home pour que le(s) nouveau(x) logo(s) y apparaissent tout de suite.
+      try { await fetch('/api/admin/revalidate', { method: 'POST' }); } catch { /* non bloquant */ }
     } catch (e: any) {
       setErr(e?.message || 'Upload impossible (droits Storage ?)');
     } finally {
