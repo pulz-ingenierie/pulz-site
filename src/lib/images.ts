@@ -66,6 +66,7 @@ export const IMG = {
     guillaume: equipe('guillaume'),
     damien: equipe('damien'),
     noann: equipe('noann'),
+    romain: equipe('romain'),
   } as Record<string, string>,
 
   // Logos clients
